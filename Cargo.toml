@@ -5,5 +5,5 @@ edition = "2021"
 
 [dependencies]
 walkdir = "2"
-dialoguer = "0.10.4"
+inquire = "0.6.1"
 

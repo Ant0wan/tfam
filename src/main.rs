@@ -1,7 +1,8 @@
-extern crate dialoguer;
 extern crate walkdir;
 
-use dialoguer::MultiSelect;
+use inquire::{
+    formatter::MultiOptionFormatter, list_option::ListOption, validator::Validation, MultiSelect,
+};
 use std::env;
 use std::fs;
 use std::io::{self, stdin, stdout, Write};
@@ -26,13 +27,15 @@ fn main() -> io::Result<()> {
     }
 
     results.sort();
-    println!("{:?}", results); //DEBUG
-    let selected_options = MultiSelect::new()
-        .with_prompt("Select options (Press Space to select, Enter to confirm)")
-        .items(&results)
-        .interact()
-        .unwrap();
-    println!("You selected: {:?}", selected_options);
+    let formatter: MultiOptionFormatter<String> = &|a| format!("{} tfvars files", a.len());
+    let ans = MultiSelect::new("Select tfvars:", results)
+        .with_formatter(formatter)
+        .prompt();
+
+    match ans {
+        Ok(_) => println!("{:?}", ans),
+        Err(_) => println!("The .tfvars list could not be processed"),
+    }
 
     Ok(())
 }
