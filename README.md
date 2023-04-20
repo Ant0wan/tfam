@@ -12,7 +12,7 @@
 *tfam* for *"Terraform Apply Manager"*
 
 
-### How it works
+## How it works
 
 ```mermaid
 flowchart TD
