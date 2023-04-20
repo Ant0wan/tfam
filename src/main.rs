@@ -23,7 +23,6 @@ fn main() -> io::Result<()> {
         {
             let entry_path = fs::canonicalize(entry.path().display().to_string()).unwrap();
             let relative_path = entry_path.strip_prefix(&current_dir).unwrap();
-            //println!("{:?}", relative_path.to_string_lossy()); // DEBUG
             results.push(relative_path.to_string_lossy().to_string());
         }
     }
@@ -31,8 +30,7 @@ fn main() -> io::Result<()> {
     results.sort();
     println!("{:?}", results); //DEBUG
 
-    // Display the results in a prompt
-    let stdout = stdout();
+    //    let stdout = stdout();
     //    let stdout = stdout.lock().into_raw_mode()?;
     //    let mut stdout = io::BufWriter::new(stdout);
     //    write!(stdout, "Select a file (use arrow keys, press Enter to confirm):\n")?;
