@@ -10,3 +10,16 @@
 ---
 
 *tfam* for *"Terraform Apply Manager"*
+
+
+### How it works
+
+```mermaid
+flowchart TD
+    A(tfam) --> C{dev.tfvars}
+    A(tfam) --> E{staging.tfvars}
+    A(tfam) --> F{production.tfvars}
+    C  --> ter(terraform)
+    E  --> te(terraform)
+    F  --> t(terraform)
+```
