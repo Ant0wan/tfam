@@ -1,11 +1,10 @@
 extern crate walkdir;
 
-use inquire::{
-    formatter::MultiOptionFormatter, list_option::ListOption, validator::Validation, MultiSelect,
-};
+use inquire::formatter::MultiOptionFormatter;
+use inquire::MultiSelect;
 use std::env;
 use std::fs;
-use std::io::{self, stdin, stdout, Write};
+use std::io;
 use walkdir::WalkDir;
 
 fn main() -> io::Result<()> {
