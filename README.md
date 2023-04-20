@@ -9,7 +9,7 @@
 
 ---
 
-*tfam* for *"Terraform Apply Manager"*
+*tfam* stands for *"Terraform Apply Manager"*
 
 
 ## How it works
