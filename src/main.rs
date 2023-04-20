@@ -1,7 +1,7 @@
 extern crate dialoguer;
 extern crate walkdir;
 
-use dialoguer::Select;
+use dialoguer::MultiSelect;
 use std::env;
 use std::fs;
 use std::io::{self, stdin, stdout, Write};
@@ -27,12 +27,12 @@ fn main() -> io::Result<()> {
 
     results.sort();
     println!("{:?}", results); //DEBUG
-    let selected_option = Select::new()
-        .with_prompt("Select an option")
+    let selected_options = MultiSelect::new()
+        .with_prompt("Select options (Press Space to select, Enter to confirm)")
         .items(&results)
         .interact()
         .unwrap();
-    println!("You selected: {}", results[selected_option]);
+    println!("You selected: {:?}", selected_options);
 
     Ok(())
 }
