@@ -1,12 +1,10 @@
-extern crate termion;
+extern crate dialoguer;
 extern crate walkdir;
 
+use dialoguer::Select;
 use std::env;
 use std::fs;
 use std::io::{self, stdin, stdout, Write};
-use termion::event::Key;
-use termion::input::TermRead;
-use termion::raw::IntoRawMode;
 use walkdir::WalkDir;
 
 fn main() -> io::Result<()> {
@@ -29,60 +27,12 @@ fn main() -> io::Result<()> {
 
     results.sort();
     println!("{:?}", results); //DEBUG
-
-    //    let stdout = stdout();
-    //    let stdout = stdout.lock().into_raw_mode()?;
-    //    let mut stdout = io::BufWriter::new(stdout);
-    //    write!(stdout, "Select a file (use arrow keys, press Enter to confirm):\n")?;
-    //    stdout.flush()?;
-    //
-    //    let mut selected_index = 0;
-    //    let mut stdin = stdin();
-    //    for (index, result) in results.iter().enumerate() {
-    //        if index == selected_index {
-    //            write!(stdout, "\x1B[1m>\x1B[0m {}\n", result)?;
-    //        } else {
-    //            write!(stdout, "  {}\n", result)?;
-    //        }
-    //        stdout.flush()?;
-    //    }
-    //
-    //    loop {
-    //        match stdin.next()? {
-    //            Some(Key::Up) => {
-    //                if selected_index > 0 {
-    //                    selected_index -= 1;
-    //                }
-    //            }
-    //            Some(Key::Down) => {
-    //                if selected_index < results.len() - 1 {
-    //                    selected_index += 1;
-    //                }
-    //            }
-    //            Some(Key::Char('\n')) => {
-    //                // User pressed Enter, confirm the selection
-    //                break;
-    //            }
-    //            _ => {}
-    //        }
-    //
-    //        // Clear the screen and redraw the prompt
-    //        write!(stdout, "{}{}", termion::clear::All, termion::cursor::Goto(1, 1))?;
-    //        write!(stdout, "Select a file (use arrow keys, press Enter to confirm):\n")?;
-    //
-    //        for (index, result) in results.iter().enumerate() {
-    //            if index == selected_index {
-    //                write!(stdout, "\x1B[1m>\x1B[0m {}\n", result)?;
-    //            } else {
-    //                write!(stdout, "  {}\n", result)?;
-    //            }
-    //            stdout.flush()?;
-    //        }
-    //    }
-    //
-    //    // Print the selected file path
-    //    write!(stdout, "{}\n", results[selected_index])?;
-    //    stdout.flush()?;
+    let selected_option = Select::new()
+        .with_prompt("Select an option")
+        .items(&results)
+        .interact()
+        .unwrap();
+    println!("You selected: {}", results[selected_option]);
 
     Ok(())
 }
