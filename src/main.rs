@@ -11,11 +11,7 @@ use walkdir::WalkDir;
 
 fn main() -> io::Result<()> {
     let mut results: Vec<String> = Vec::new();
-
-    // Get the current directory
     let current_dir = env::current_dir()?;
-
-    // Recursively walk the current directory and its subdirectories
     for entry in WalkDir::new(current_dir.clone()) {
         let entry = entry?;
         if entry.file_type().is_file()
@@ -25,16 +21,15 @@ fn main() -> io::Result<()> {
                 .map(|e| e == "tfvars")
                 .unwrap_or(false)
         {
-            // Add the file path to the results vector
             let entry_path = fs::canonicalize(entry.path().display().to_string()).unwrap();
             let relative_path = entry_path.strip_prefix(&current_dir).unwrap();
-            println!("{:?}", relative_path.to_string_lossy());
-            results.push(entry.path().display().to_string());
+            //println!("{:?}", relative_path.to_string_lossy()); // DEBUG
+            results.push(relative_path.to_string_lossy().to_string());
         }
     }
 
-    // Sort the results vector
     results.sort();
+    println!("{:?}", results); //DEBUG
 
     // Display the results in a prompt
     let stdout = stdout();
