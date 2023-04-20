@@ -3,12 +3,12 @@ name: Rust
 on:
   push:
     branches:
-      - master
+      - main
     tags:
       - '*'
   pull_request:
     branches:
-      - master
+      - main
 
 permissions: write-all
 
