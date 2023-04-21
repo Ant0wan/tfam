@@ -3,13 +3,13 @@ terraform {
 }
 
 module "gcp" {
-  source "./gcp"
+  source = "./gcp"
 }
-  
+
 module "azure" {
-  source "./azure"
+  source = "./azure"
 }
-  
+
 module "aws" {
-  source "./aws"
+  source = "./aws"
 }
