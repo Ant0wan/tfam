@@ -1,0 +1,1 @@
+clouds = ["aws", "azure", "gcp"]
