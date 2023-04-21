@@ -4,15 +4,15 @@ terraform {
 
 module "conditionally_used_dev_module" {
   source = "./dev"
-  count  = (var.environment == "dev") ? 1 : 0
+  count = var.environment == "dev" ? 1 : 0
 }
 
 module "conditionally_used_staging_module" {
-  source = "./dev"
-  count  = (var.environment == "staging") ? 1 : 0
+  source = "./staging"
+  count  = var.environment == "staging" ? 1 : 0
 }
 
 module "conditionally_used_production_module" {
   source = "./production"
-  count  = (var.environment == "production") ? 1 : 0
+  count  = var.environment == "production" ? 1 : 0
 }
