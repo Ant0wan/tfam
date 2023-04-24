@@ -5,10 +5,12 @@ use inquire::MultiSelect;
 use std::env;
 use std::fs;
 use std::io;
-use std::thread;
+use std::process::Command;
 use walkdir::WalkDir;
 
 fn main() -> io::Result<()> {
+    let args: Vec<String> = env::args().skip(1).collect();
+
     let mut results: Vec<String> = Vec::new();
     let current_dir = env::current_dir()?;
     for entry in WalkDir::new(current_dir.clone()) {
@@ -35,14 +37,14 @@ fn main() -> io::Result<()> {
     match ans {
         Ok(_) => {
             for element in ans.unwrap() {
-                thread::spawn(move || {
-                    println!("terraform plan -var-file={:?}", element);
-                });
+                println!("terraform {:?} -var-file={}", args.clone(), element);
+                let status = Command::new("terraform")
+                    .args(args.clone())
+                    .arg(format!("-var-file={:?}", element))
+                    .status();
             }
         }
         Err(_) => println!("The .tfvars list could not be processed"),
     }
-    // Sleep to allow spawned threads to finish before program exits
-    thread::sleep(std::time::Duration::from_millis(10));
     Ok(())
 }
