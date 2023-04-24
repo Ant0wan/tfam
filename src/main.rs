@@ -11,6 +11,11 @@ use walkdir::WalkDir;
 fn main() -> io::Result<()> {
     let args: Vec<String> = env::args().skip(1).collect();
 
+    if args.len() < 1 {
+        let status = Command::new("terraform").status();
+        return Ok(());
+    }
+
     if args[0] == "init" {
         let status = Command::new("terraform").args(args.clone()).status();
         return Ok(());
@@ -31,6 +36,11 @@ fn main() -> io::Result<()> {
             let relative_path = entry_path.strip_prefix(&current_dir).unwrap();
             results.push(relative_path.to_string_lossy().to_string());
         }
+    }
+
+    if args.len() > 1 && args[1] == "-var-file" {
+        // test get var file, add it to the list but remove it from cli
+        results.push(args[2].clone());
     }
 
     results.sort();
