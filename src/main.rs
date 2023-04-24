@@ -11,6 +11,11 @@ use walkdir::WalkDir;
 fn main() -> io::Result<()> {
     let args: Vec<String> = env::args().skip(1).collect();
 
+    if args[0] == "init" {
+        let status = Command::new("terraform").args(args.clone()).status();
+        return Ok(());
+    }
+
     let mut results: Vec<String> = Vec::new();
     let current_dir = env::current_dir()?;
     for entry in WalkDir::new(current_dir.clone()) {
