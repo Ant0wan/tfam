@@ -37,10 +37,11 @@ fn main() -> io::Result<()> {
     match ans {
         Ok(_) => {
             for element in ans.unwrap() {
-                println!("terraform {:?} -var-file={}", args.clone(), element);
+                println!("terraform {:?} -var-file {}", args.clone(), element);
                 let status = Command::new("terraform")
                     .args(args.clone())
-                    .arg(format!("-var-file={:?}", element))
+                    .arg("-var-file")
+                    .arg(element)
                     .status();
             }
         }
