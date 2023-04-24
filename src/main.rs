@@ -29,7 +29,7 @@ fn main() -> io::Result<()> {
             && entry
                 .path()
                 .extension()
-                .map(|e| e == "tfvars")
+                .map(|e| e == "tfvars" || e == "tfvars.json")
                 .unwrap_or(false)
         {
             let entry_path = fs::canonicalize(entry.path().display().to_string()).unwrap();
