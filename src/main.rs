@@ -32,7 +32,7 @@ fn main() -> io::Result<()> {
         .prompt();
 
     match ans {
-        Ok(_) => println!("{:?}", ans),
+        Ok(_) => for element in ans.unwrap() { println!("terraform plan -var-file={:?}", element);},
         Err(_) => println!("The .tfvars list could not be processed"),
     }
 
