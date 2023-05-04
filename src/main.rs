@@ -23,9 +23,8 @@ fn main() -> io::Result<()> {
         let files = select_tfvars_files(results);
         match files {
             Ok(mut v) => {
-                v.sort();
                 println!("{:?}", v);
-            }
+                }
             Err(e) => println!("Prompt selection failed: {e:?}"),
         }
     }
