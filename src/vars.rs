@@ -1,18 +1,13 @@
 extern crate walkdir;
 
-use inquire::formatter::MultiOptionFormatter;
-use inquire::MultiSelect;
 use std::env;
 use std::fmt;
 use std::fs;
 use std::io;
-use std::process::Command;
 use walkdir::WalkDir;
 
-
-{
+fn find_tfvars_files(current_dir: &std::path::Path) -> Result<Vec<String>, io::Error> {
     let mut results: Vec<String> = Vec::new();
-    let current_dir = env::current_dir()?;
     for entry in WalkDir::new(current_dir.clone()) {
         let entry = entry?;
         if entry.file_type().is_file()
@@ -34,4 +29,6 @@ use walkdir::WalkDir;
     }
 
     results.sort();
+    Ok(results)
 }
+
