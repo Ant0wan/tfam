@@ -3,7 +3,6 @@ extern crate walkdir;
 use inquire::formatter::MultiOptionFormatter;
 use inquire::MultiSelect;
 use std::env;
-use std::env;
 use std::fs;
 use std::io;
 use std::process::Command;
@@ -36,7 +35,7 @@ impl Args {
             interactive: false,
             concurrent: false,
             varfiles: Vec::new(),
-            action: Option,
+            action: None,
             arguments: Vec::new(),
         }
     }
