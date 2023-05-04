@@ -20,7 +20,10 @@ fn main() -> io::Result<()> {
         let current_dir = env::current_dir()?;
         let results = find_tfvars_files(&current_dir)?;
         let files = select_tfvars_files(results);
-        args.varfiles.append(files);
+        match files {
+            Ok(v) => args.varfiles.append(v),
+            Err(e) => println!("Prompt selection failed: {e:?}"),
+        }
     }
     args.varfiles.sort();
     println!("{:?}", args.varfiles);
