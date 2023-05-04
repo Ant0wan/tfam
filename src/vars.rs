@@ -4,7 +4,7 @@ use std::fs;
 use std::io;
 use walkdir::WalkDir;
 
-fn find_tfvars_files(current_dir: &std::path::Path) -> Result<Vec<String>, io::Error> {
+pub fn find_tfvars_files(current_dir: &std::path::Path) -> Result<Vec<String>, io::Error> {
     let mut results: Vec<String> = Vec::new();
     for entry in WalkDir::new(current_dir.clone()) {
         let entry = entry?;

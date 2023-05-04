@@ -1,7 +1,7 @@
 use inquire::formatter::MultiOptionFormatter;
 use inquire::MultiSelect;
 
-fn select_tfvars_files(results: Vec<String>) -> Option<Vec<usize>> {
+pub fn select_tfvars_files(results: Vec<String>) -> Option<Vec<usize>> {
     let mut results = results;
     results.sort();
 

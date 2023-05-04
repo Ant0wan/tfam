@@ -1,16 +1,11 @@
 extern crate walkdir;
 
+///use std::process::Command;
 use cli::parse_args;
-use inquire::formatter::MultiOptionFormatter;
-use inquire::MultiSelect;
 use prompt::select_tfvars_files;
 use std::env;
-use std::fmt;
-use std::fs;
 use std::io;
-use std::process::Command;
 use vars::find_tfvars_files;
-use walkdir::WalkDir;
 
 // tfam workspace clean
 // tfam apply --interactive --concurrent -tf-var=toto.tfvars -tf-var toto.tfvars
