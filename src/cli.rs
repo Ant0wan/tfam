@@ -37,7 +37,7 @@ pub fn parse_args() -> Args {
         "execute with interactive prompt to select tfvars before executing terraform",
     );
     opts.optflag("c", "concurrent", "enable concurrent operations");
-    opts.optopt("", "var-file", "use a specific variable file", "<filename>");
+    opts.optmulti("", "var-file", "use a specific variable file", "<filename>");
     opts.optflag("h", "help", "print usage message and exit");
 
     let matches = match opts.parse(&args[1..]) {
