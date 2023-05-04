@@ -59,11 +59,7 @@ pub fn parse_args() -> Args {
     let command = match matches.free.len() {
         1 => match matches.free[0].as_str() {
             "workspace" => Some(Command::Workspace),
-            cmd => {
-                eprintln!("Unknown command: {}", cmd);
-                print_usage(&opts);
-                std::process::exit(1);
-            }
+            _ => None,
         },
         _ => None,
     };
