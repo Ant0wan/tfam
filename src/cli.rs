@@ -54,10 +54,7 @@ pub fn parse_args() -> Args {
         std::process::exit(0);
     }
 
-    let mut varfiles = Vec::new();
-    if let Some(values) = matches.opt_strs("var-file") {
-        varfiles = values;
-    }
+    let mut varfiles = matches.opt_strs("var-file");
 
     let command = match matches.free.len() {
         0 => None,
