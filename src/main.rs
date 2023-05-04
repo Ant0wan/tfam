@@ -17,6 +17,7 @@ fn main() -> io::Result<()> {
     let args = parse_args();
     let current_dir = env::current_dir()?;
     let results = find_tfvars_files(&current_dir)?;
+    let files = select_tfvars_files(results);
     //println!("{:?}", args);
 
     //    match select_tfvars_files(results) {
