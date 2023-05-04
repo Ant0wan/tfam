@@ -52,10 +52,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "68b0cf012f1230e43cd00ebb729c6bb58707ecfa8ad08b52ef3a4ccd2697fc30"
 
 [[package]]
-name = "getopt"
-version = "1.1.3"
+name = "getopts"
+version = "0.2.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ee1289e6cb1ae7c28a9b9776bd599f8afb31c20965ff257a8ea20eaa4da5e3c7"
+checksum = "14dbbfd5c71d70241ecf9e6f13737f7b5ce823821063188d7e46c41d371eebd5"
+dependencies = [
+ "unicode-width",
+]
 
 [[package]]
 name = "inquire"
@@ -241,7 +244,7 @@ dependencies = [
 name = "tfam"
 version = "0.1.0"
 dependencies = [
- "getopt",
+ "getopts",
  "inquire",
  "walkdir",
 ]
