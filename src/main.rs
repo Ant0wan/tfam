@@ -26,22 +26,6 @@ fn main() -> io::Result<()> {
     }
     println!("{:?}", files);
 
-    //    match select_tfvars_files(results) {
-    //        Some(selected_indices) => {
-    //            println!("Selected files:");
-    //            for index in selected_indices {
-    //                println!("  {}", results[index]);
-    //            }
-    //        }
-    //        None => {
-    //            println!("Prompt was canceled or exited without selection.");
-    //        }
-    //    }
-
-    //   let ans = MultiSelect::new("Select tfvars:", results)
-
-    //    match ans {
-    //        Ok(_) => {
     //            for element in ans.unwrap() {
     //                println!("terraform {:?} -var-file {}", args.clone(), element);
     //                let status = Command::new("terraform")
@@ -49,10 +33,6 @@ fn main() -> io::Result<()> {
     //                    .arg("-var-file")
     //                    .arg(element)
     //                    .status();
-    //            }
-    //        }
-    //        Err(_) => println!("The .tfvars list could not be processed"),
     //    }
-    //println!("{:?}", args);
     Ok(())
 }
