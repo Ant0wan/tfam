@@ -32,11 +32,11 @@ pub fn parse_args() -> Args {
 
     let mut opts = Options::new();
     opts.optflag(
-        "",
+        "i",
         "interactive",
         "execute with interactive prompt to select tfvars before executing terraform",
     );
-    opts.optflag("", "concurrent", "enable concurrent operations");
+    opts.optflag("c", "concurrent", "enable concurrent operations");
     opts.optopt("", "var-file", "use a specific variable file", "<filename>");
     opts.optflag("h", "help", "print usage message and exit");
 
