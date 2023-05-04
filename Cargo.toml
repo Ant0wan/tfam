@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-walkdir = "2"
+getopts = "0.2"
 inquire = "0.6.1"
+walkdir = "2.3.3"
 

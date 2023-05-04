@@ -1,71 +1,52 @@
 extern crate walkdir;
 
-use inquire::formatter::MultiOptionFormatter;
-use inquire::MultiSelect;
+///use std::process::Command;
+use cli::parse_args;
+use prompt::select_tfvars_files;
 use std::env;
-use std::fs;
 use std::io;
-use std::process::Command;
-use walkdir::WalkDir;
+use vars::find_tfvars_files;
+
+// tfam workspace clean
+// tfam apply --interactive --concurrent -tf-var=toto.tfvars -tf-var toto.tfvars
+pub mod cli;
+pub mod prompt;
+pub mod vars;
 
 fn main() -> io::Result<()> {
-    let args: Vec<String> = env::args().skip(1).collect();
-
-    if args.len() < 1 {
-        let status = Command::new("terraform").status();
-        return Ok(());
-    }
-
-    if args[0] == "init" {
-        let status = Command::new("terraform").args(args.clone()).status();
-        return Ok(());
-    }
-
-    let mut results: Vec<String> = Vec::new();
+    let args = parse_args();
     let current_dir = env::current_dir()?;
-    for entry in WalkDir::new(current_dir.clone()) {
-        let entry = entry?;
-        if entry.file_type().is_file()
-            && (entry
-                .path()
-                .extension()
-                .map(|e| e == "tfvars")
-                .unwrap_or(false)
-                || entry
-                    .path()
-                    .extension()
-                    .map(|e| e == "tfvars.json")
-                    .unwrap_or(false))
-        {
-            let entry_path = fs::canonicalize(entry.path().display().to_string()).unwrap();
-            let relative_path = entry_path.strip_prefix(&current_dir).unwrap();
-            results.push(relative_path.to_string_lossy().to_string());
-        }
-    }
+    let results = find_tfvars_files(&current_dir)?;
+    let files = select_tfvars_files(results);
+    //println!("{:?}", args);
 
-    if args.len() > 1 && args[1] == "-var-file" {
-        // test get var file, add it to the list but remove it from cli
-        results.push(args[2].clone());
-    }
+    //    match select_tfvars_files(results) {
+    //        Some(selected_indices) => {
+    //            println!("Selected files:");
+    //            for index in selected_indices {
+    //                println!("  {}", results[index]);
+    //            }
+    //        }
+    //        None => {
+    //            println!("Prompt was canceled or exited without selection.");
+    //        }
+    //    }
 
-    results.sort();
-    let formatter: MultiOptionFormatter<String> = &|a| format!("{} tfvars files", a.len());
-    let ans = MultiSelect::new("Select tfvars:", results)
-        .with_formatter(formatter)
-        .prompt();
+    //   let ans = MultiSelect::new("Select tfvars:", results)
 
-    match ans {
-        Ok(_) => {
-            for element in ans.unwrap() {
-                println!("terraform {:?} -var-file {}", args.clone(), element);
-                let status = Command::new("terraform")
-                    .args(args.clone())
-                    .arg("-var-file")
-                    .arg(element)
-                    .status();
-            }
-        }
-        Err(_) => println!("The .tfvars list could not be processed"),
-    }
+    //    match ans {
+    //        Ok(_) => {
+    //            for element in ans.unwrap() {
+    //                println!("terraform {:?} -var-file {}", args.clone(), element);
+    //                let status = Command::new("terraform")
+    //                    .args(args.clone())
+    //                    .arg("-var-file")
+    //                    .arg(element)
+    //                    .status();
+    //            }
+    //        }
+    //        Err(_) => println!("The .tfvars list could not be processed"),
+    //    }
+    //println!("{:?}", args);
     Ok(())
 }
