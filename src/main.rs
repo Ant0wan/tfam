@@ -3,9 +3,9 @@ extern crate walkdir;
 use inquire::formatter::MultiOptionFormatter;
 use inquire::MultiSelect;
 use std::env;
+use std::fmt;
 use std::fs;
 use std::io;
-use std::fmt;
 use std::process::Command;
 use walkdir::WalkDir;
 
