@@ -57,7 +57,6 @@ pub fn parse_args() -> Args {
     let varfiles = matches.opt_strs("var-file");
 
     let command = match matches.free.len() {
-        0 => None,
         1 => match matches.free[0].as_str() {
             "workspace" => Some(Command::Workspace),
             cmd => {
@@ -66,11 +65,7 @@ pub fn parse_args() -> Args {
                 std::process::exit(1);
             }
         },
-        _ => {
-            eprintln!("Multiple commands provided. Only one command can be used at a time.");
-            print_usage(&opts);
-            std::process::exit(1);
-        }
+        _ => None,
     };
 
     let workspace_subcommand = match command {
