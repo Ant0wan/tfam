@@ -14,14 +14,14 @@ pub mod prompt;
 pub mod vars;
 
 fn main() -> io::Result<()> {
-    let args = parse_args();
+    let mut args = parse_args();
     println!("{:?}", args);
     if args.interactive {
         let current_dir = env::current_dir()?;
         let results = find_tfvars_files(&current_dir)?;
         let files = select_tfvars_files(results);
         match files {
-            Ok(v) => args.varfiles.append(v),
+            Ok(mut v) => args.varfiles.append(&mut v),
             Err(e) => println!("Prompt selection failed: {e:?}"),
         }
     }
