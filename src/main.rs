@@ -9,6 +9,10 @@ use std::io;
 use std::process::Command;
 use walkdir::WalkDir;
 
+
+// tfam workspace clean
+// tfam apply --interactive --concurrent -tf-var=toto.tfvars
+
 pub fn print_usage() {
     println!("Usage: tfam [options] [action [arguments]]");
     println!("\nOptions:");
@@ -46,6 +50,9 @@ pub fn parse_args() -> Args {
             }
             "-i" | "--interactive" => {
                 args.interactive = true; // var-files in cli only
+            }
+            "-c" | "--concurrent" => {
+                args.concurrent = true; // false by default if -i specified
             }
             "-var-file" => {
                 if let Some(var_file) = args_iter.next() {
