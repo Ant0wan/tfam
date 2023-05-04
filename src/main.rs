@@ -15,10 +15,11 @@ pub mod vars;
 
 fn main() -> io::Result<()> {
     let args = parse_args();
+    println!("{:?}", args);
     let current_dir = env::current_dir()?;
     let results = find_tfvars_files(&current_dir)?;
     let files = select_tfvars_files(results);
-    //println!("{:?}", args);
+    println!("{:?}", files);
 
     //    match select_tfvars_files(results) {
     //        Some(selected_indices) => {
