@@ -26,6 +26,5 @@ pub fn find_tfvars_files(current_dir: &std::path::Path) -> Result<Vec<String>, i
         }
     }
 
-    results.sort();
     Ok(results)
 }
