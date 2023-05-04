@@ -18,15 +18,17 @@ fn main() -> io::Result<()> {
     println!("{:?}", args);
     if args.interactive {
         let current_dir = env::current_dir()?;
-        let results = find_tfvars_files(&current_dir)?;
+        let mut results = find_tfvars_files(&current_dir)?;
+        results.append(&mut args.varfiles);
         let files = select_tfvars_files(results);
         match files {
-            Ok(mut v) => args.varfiles.append(&mut v),
+            Ok(mut v) => {
+                v.sort();
+                println!("{:?}", v);
+            }
             Err(e) => println!("Prompt selection failed: {e:?}"),
         }
     }
-    args.varfiles.sort();
-    println!("{:?}", args.varfiles);
 
     //    match select_tfvars_files(results) {
     //        Some(selected_indices) => {
