@@ -17,18 +17,19 @@ fn main() -> io::Result<()> {
     let args = parse_args();
     let current_dir = env::current_dir()?;
     let results = find_tfvars_files(&current_dir)?;
+    //println!("{:?}", args);
 
-    match select_tfvars_files(results) {
-        Some(selected_indices) => {
-            println!("Selected files:");
-            for index in selected_indices {
-                println!("  {}", results[index]);
-            }
-        }
-        None => {
-            println!("Prompt was canceled or exited without selection.");
-        }
-    }
+    //    match select_tfvars_files(results) {
+    //        Some(selected_indices) => {
+    //            println!("Selected files:");
+    //            for index in selected_indices {
+    //                println!("  {}", results[index]);
+    //            }
+    //        }
+    //        None => {
+    //            println!("Prompt was canceled or exited without selection.");
+    //        }
+    //    }
 
     //   let ans = MultiSelect::new("Select tfvars:", results)
 

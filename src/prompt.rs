@@ -1,7 +1,8 @@
+use inquire::error::InquireResult;
 use inquire::formatter::MultiOptionFormatter;
 use inquire::MultiSelect;
 
-pub fn select_tfvars_files(results: Vec<String>) -> Option<Vec<usize>> {
+pub fn select_tfvars_files(results: Vec<String>) -> InquireResult<Vec<String>> {
     let mut results = results;
     results.sort();
 
