@@ -54,7 +54,7 @@ pub fn parse_args() -> Args {
         std::process::exit(0);
     }
 
-    let mut varfiles = matches.opt_strs("var-file");
+    let varfiles = matches.opt_strs("var-file");
 
     let command = match matches.free.len() {
         0 => None,
