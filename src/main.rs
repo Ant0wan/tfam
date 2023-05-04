@@ -5,6 +5,7 @@ use inquire::MultiSelect;
 use std::env;
 use std::fs;
 use std::io;
+use std::fmt;
 use std::process::Command;
 use walkdir::WalkDir;
 
@@ -16,6 +17,19 @@ pub fn print_usage() {
     println!("\nOptions:");
     println!("-h/--help -- print usage message and exit");
     println!("-i/--interactive -- execute with interactive prompt to select tfvars before executing terraform");
+}
+
+impl fmt::Debug for Args {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("Args")
+            .field("help", &self.help)
+            .field("interactive", &self.interactive)
+            .field("concurrent", &self.concurrent)
+            .field("varfiles", &self.varfiles)
+            .field("action", &self.action)
+            .field("arguments", &self.arguments)
+            .finish()
+    }
 }
 
 pub struct Args {
@@ -144,5 +158,6 @@ fn main() -> io::Result<()> {
     //        }
     //        Err(_) => println!("The .tfvars list could not be processed"),
     //    }
+    println!("{:?}", args);
     Ok(())
 }
