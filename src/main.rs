@@ -3,18 +3,17 @@ extern crate walkdir;
 use inquire::formatter::MultiOptionFormatter;
 use inquire::MultiSelect;
 use std::env;
+use std::env;
 use std::fs;
 use std::io;
 use std::process::Command;
 use walkdir::WalkDir;
-use std::env;
 
 pub fn print_usage() {
     println!("Usage: tfam [options] [action [arguments]]");
     println!("\nOptions:");
     println!("-h/--help -- print usage message and exit");
     println!("-i/--interactive -- execute with interactive prompt to select tfvars before executing terraform");
-    println!("\nActions are commands like \"tail\" or \"stop\". If -i is specified or no action is specified on the command line, a \"shell\" interpreting actions typed interactively is started. Use the action \"help\" to find out about available actions.");
 }
 
 pub struct Args {
@@ -49,7 +48,16 @@ pub fn parse_args() -> Args {
                 args.interactive = true; // var-files in cli only
             }
             "-var-file" => {
-                args.varfiles = Some(args_iter.next().expect("missing var file")); // should append
+                if let Some(var_file) = args_iter.next() {
+                    args.varfiles.push(var_file);
+                } else {
+                    // If the next argument is missing, try to parse the argument itself as a var file
+                    if let Some(var_file) = arg_iter.next() {
+                        args.varfiles.push(var_file);
+                    } else {
+                        panic!("missing var file");
+                    }
+                }
             }
             _ => {
                 if args.action.is_none() {
@@ -64,14 +72,13 @@ pub fn parse_args() -> Args {
     args
 }
 
-
 fn main() -> io::Result<()> {
     let args = parse_args();
     if args.help {
         print_usage();
     }
 
-//    let args: Vec<String> = env::args().skip(1).collect();
+    //    let args: Vec<String> = env::args().skip(1).collect();
 
     if args.len() < 1 {
         let status = Command::new("terraform").status();
