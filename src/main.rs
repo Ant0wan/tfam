@@ -8,7 +8,7 @@ use std::io;
 use vars::find_tfvars_files;
 
 // tfam workspace clean
-// tfam apply --interactive --concurrent -tf-var=toto.tfvars -tf-var toto.tfvars
+// tfam apply -interactive -concurrent -tf-var=toto.tfvars -tf-var toto.tfvars
 pub mod cli;
 pub mod prompt;
 pub mod vars;
