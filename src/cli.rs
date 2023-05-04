@@ -31,7 +31,11 @@ pub fn parse_args() -> Args {
     let args: Vec<String> = env::args().collect();
 
     let mut opts = Options::new();
-    opts.optflag("", "interactive", "execute with interactive prompt to select tfvars before executing terraform");
+    opts.optflag(
+        "",
+        "interactive",
+        "execute with interactive prompt to select tfvars before executing terraform",
+    );
     opts.optflag("", "concurrent", "enable concurrent operations");
     opts.optopt("", "var-file", "use a specific variable file", "<filename>");
     opts.optflag("h", "help", "print usage message and exit");
@@ -109,4 +113,3 @@ pub fn parse_args() -> Args {
         workspace_subcommand,
     }
 }
-

@@ -1,7 +1,5 @@
 extern crate walkdir;
 
-use std::env;
-use std::fmt;
 use std::fs;
 use std::io;
 use walkdir::WalkDir;
@@ -31,4 +29,3 @@ fn find_tfvars_files(current_dir: &std::path::Path) -> Result<Vec<String>, io::E
     results.sort();
     Ok(results)
 }
-

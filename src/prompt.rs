@@ -11,4 +11,3 @@ fn select_tfvars_files(results: Vec<String>) -> Option<Vec<usize>> {
         .with_formatter(formatter)
         .prompt()
 }
-
