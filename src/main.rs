@@ -1,7 +1,7 @@
 extern crate walkdir;
 
 ///use std::process::Command;
-use cli::parse_args;
+use cli::parse_commands;
 use prompt::select_tfvars_files;
 use std::env;
 use std::io;
@@ -14,17 +14,18 @@ pub mod prompt;
 pub mod vars;
 
 fn main() -> io::Result<()> {
-    let args = parse_args();
-    println!("{:?}", args);
-    let mut files = args.varfiles;
-    files.sort();
-    if args.interactive {
-        let current_dir = env::current_dir()?;
-        let mut results = find_tfvars_files(&current_dir)?;
-        results.append(&mut files);
-        files = select_tfvars_files(results).unwrap();
-    }
-    println!("{:?}", files);
+    let (mut args, commands, mut varfiles) = parse_commands();
+    println!("Arguments: {:?}", args);
+    println!("Commands: {:?}", commands);
+    println!("Varfiles: {:?}", varfiles);
+    varfiles.sort();
+    //  if args.interactive {
+    //      let current_dir = env::current_dir()?;
+    //      let mut results = find_tfvars_files(&current_dir)?;
+    //      results.append(&mut files);
+    //      files = select_tfvars_files(results).unwrap();
+    //  }
+    //  println!("{:?}", files);
 
     //            for element in ans.unwrap() {
     //                println!("terraform {:?} -var-file {}", args.clone(), element);
