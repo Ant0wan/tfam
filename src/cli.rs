@@ -30,7 +30,7 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
             "-concurrent" => cmd.concurrent = true,
             "-help" => cmd.help = true,
             "-var-file" => {
-                if let Some(file) = args.iter().skip_while(|x| x != &arg).nth(1) {
+                if let Some(file) = args_iter.next() {
                     cmd.varfiles.push(file.to_string());
                 }
             }

@@ -18,15 +18,16 @@ fn main() -> io::Result<()> {
     if cmd.help {
         print_usage();
     }
+    println!("Commands: {:?}", cmd);
+    if cmd.interactive {
+        let current_dir = env::current_dir()?;
+        let mut results = find_tfvars_files(&current_dir)?;
+        cmd.varfiles.append(&mut results);
+        cmd.varfiles = select_tfvars_files(cmd.varfiles).unwrap();
+    }
     cmd.varfiles.sort();
     println!("Commands: {:?}", cmd);
     println!("Arguments: {:?}", args);
-    //if cmd.interactive {
-    //    let current_dir = env::current_dir()?;
-    //    let mut results = find_tfvars_files(&current_dir)?;
-    //    results.append(&mut files);
-    //    files = select_tfvars_files(results).unwrap();
-    //}
     //println!("{:?}", files);
 
     //            for element in ans.unwrap() {
