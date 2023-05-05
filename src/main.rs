@@ -29,7 +29,9 @@ fn main() -> io::Result<()> {
     println!("Commands: {:?}", cmd);
     println!("Arguments: {:?}", args);
     //println!("{:?}", files);
-
+    for f in cmd.varfiles {
+        println!("{:?} -var-file={:?}", args, f);
+    }
     //            for element in ans.unwrap() {
     //                println!("terraform {:?} -var-file {}", args.clone(), element);
     //                let status = Command::new("terraform")
