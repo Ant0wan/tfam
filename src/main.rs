@@ -1,30 +1,34 @@
 extern crate walkdir;
 
 ///use std::process::Command;
-use cli::parse_args;
+use cli::{parse_commands, print_usage};
 use prompt::select_tfvars_files;
 use std::env;
 use std::io;
 use vars::find_tfvars_files;
 
-// tfam workspace clean
-// tfam apply -interactive -concurrent -tf-var=toto.tfvars -tf-var toto.tfvars
+// tfam workspace clean// not yet implemented
+// tfam -interactive -var-file=toto=ok -var-file toto2 -interactive -concurrent plan -destroy
 pub mod cli;
 pub mod prompt;
 pub mod vars;
 
 fn main() -> io::Result<()> {
-    let args = parse_args();
-    println!("{:?}", args);
-    let mut files = args.varfiles;
-    files.sort();
-    if args.interactive {
+    let (mut args, mut cmd) = parse_commands();
+    if cmd.help {
+        print_usage();
+    }
+    println!("Commands: {:?}", cmd);
+    if cmd.interactive {
         let current_dir = env::current_dir()?;
         let mut results = find_tfvars_files(&current_dir)?;
-        results.append(&mut files);
-        files = select_tfvars_files(results).unwrap();
+        cmd.varfiles.append(&mut results);
+        cmd.varfiles = select_tfvars_files(cmd.varfiles).unwrap();
     }
-    println!("{:?}", files);
+    cmd.varfiles.sort();
+    println!("Commands: {:?}", cmd);
+    println!("Arguments: {:?}", args);
+    //println!("{:?}", files);
 
     //            for element in ans.unwrap() {
     //                println!("terraform {:?} -var-file {}", args.clone(), element);
