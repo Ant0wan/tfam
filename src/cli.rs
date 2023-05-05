@@ -1,18 +1,39 @@
 use std::env;
 
-pub fn parse_commands() -> (Vec<String>, Vec<String>, Vec<String>) {
+#[derive(Debug)]
+pub struct Commands {
+    pub interactive: bool,
+    pub concurrent: bool,
+    pub help: bool,
+    pub commands: Vec<String>,
+    pub varfiles: Vec<String>,
+}
+
+fn print_usage() {
+    let brief = "Usage: tfam [global options] <subcommand> [args]";
+    print!("{}", brief);
+}
+
+pub fn parse_commands() -> (Vec<String>, Commands) {
     let mut args: Vec<String> = env::args().collect();
+    let mut cmd = Commands {
+        interactive: false,
+        concurrent: false,
+        help: false,
+        commands: Vec::new(),
+        varfiles: Vec::new(),
+    };
     let mut commands: Vec<String> = Vec::new();
     let mut varfiles: Vec<String> = Vec::new();
 
     let mut args_iter = args.iter().skip(1);
     while let Some(arg) = args_iter.next() {
         match arg.as_str() {
-            "-interactive" => commands.push(String::from("interactive")),
-            "-concurrent" => commands.push(String::from("concurrent")),
+            "-interactive" => cmd.commands.push(String::from("interactive")),
+            "-concurrent" => cmd.commands.push(String::from("concurrent")),
             "-var-file" => {
                 if let Some(file) = args.iter().skip_while(|x| x != &arg).nth(1) {
-                    varfiles.push(file.to_string());
+                    cmd.varfiles.push(file.to_string());
                 }
             }
             _ => {}
@@ -20,7 +41,7 @@ pub fn parse_commands() -> (Vec<String>, Vec<String>, Vec<String>) {
         match arg.starts_with("-var-file=") {
             true => {
                 if let Some(suffix) = arg.strip_prefix("-var-file=") {
-                    varfiles.push(suffix.to_string());
+                    cmd.varfiles.push(suffix.to_string());
                 } else {
                     println!("Error, no varfile specified. `-var-file=` cannot be empty.");
                 }
@@ -29,5 +50,5 @@ pub fn parse_commands() -> (Vec<String>, Vec<String>, Vec<String>) {
         }
     }
 
-    (args, commands, varfiles)
+    (args, cmd)
 }

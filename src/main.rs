@@ -14,11 +14,11 @@ pub mod prompt;
 pub mod vars;
 
 fn main() -> io::Result<()> {
-    let (mut args, commands, mut varfiles) = parse_commands();
+    let (mut args, mut cmd) = parse_commands();
     println!("Arguments: {:?}", args);
-    println!("Commands: {:?}", commands);
-    println!("Varfiles: {:?}", varfiles);
-    varfiles.sort();
+    println!("Commands: {:?}", cmd.commands);
+    println!("Varfiles: {:?}", cmd.varfiles);
+    cmd.varfiles.sort();
     //  if args.interactive {
     //      let current_dir = env::current_dir()?;
     //      let mut results = find_tfvars_files(&current_dir)?;
