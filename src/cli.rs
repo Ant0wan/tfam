@@ -23,14 +23,13 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
         commands: Vec::new(),
         varfiles: Vec::new(),
     };
-    let mut commands: Vec<String> = Vec::new();
-    let mut varfiles: Vec<String> = Vec::new();
 
     let mut args_iter = args.iter().skip(1);
     while let Some(arg) = args_iter.next() {
         match arg.as_str() {
-            "-interactive" => cmd.commands.push(String::from("interactive")),
-            "-concurrent" => cmd.commands.push(String::from("concurrent")),
+            "-interactive" => cmd.interactive = true,
+            "-concurrent" => cmd.concurrent = true,
+            "-help" => cmd.help = true,
             "-var-file" => {
                 if let Some(file) = args.iter().skip_while(|x| x != &arg).nth(1) {
                     cmd.varfiles.push(file.to_string());
