@@ -9,9 +9,8 @@ pub struct Commands {
     pub varfiles: Vec<String>,
 }
 
-fn print_usage() {
-    let brief = "Usage: tfam [global options] <subcommand> [args]";
-    print!("{}", brief);
+pub fn print_usage() {
+    println!("Usage: tfam [global options] <subcommand> [args]");
 }
 
 pub fn parse_commands() -> (Vec<String>, Commands) {

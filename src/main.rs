@@ -1,7 +1,7 @@
 extern crate walkdir;
 
 ///use std::process::Command;
-use cli::parse_commands;
+use cli::{parse_commands, print_usage};
 use prompt::select_tfvars_files;
 use std::env;
 use std::io;
@@ -15,6 +15,9 @@ pub mod vars;
 
 fn main() -> io::Result<()> {
     let (mut args, mut cmd) = parse_commands();
+    if cmd.help {
+        print_usage();
+    }
     println!("Arguments: {:?}", args);
     println!("Commands: {:?}", cmd.commands);
     println!("Varfiles: {:?}", cmd.varfiles);
