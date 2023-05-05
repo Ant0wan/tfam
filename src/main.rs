@@ -18,9 +18,8 @@ fn main() -> io::Result<()> {
     if cmd.help {
         print_usage();
     }
+    println!("Commands: {:?}", cmd);
     println!("Arguments: {:?}", args);
-    println!("Commands: {:?}", cmd.commands);
-    println!("Varfiles: {:?}", cmd.varfiles);
     cmd.varfiles.sort();
     //  if args.interactive {
     //      let current_dir = env::current_dir()?;

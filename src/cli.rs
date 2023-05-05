@@ -48,5 +48,13 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
         }
     }
 
+    if cmd.interactive {
+        args.retain(|x| x != "-interactive");
+    }
+    if cmd.concurrent {
+        args.retain(|x| x != "-concurrent");
+    }
+    // also remove -var-files + cmd.varfiles from args
+
     (args, cmd)
 }
