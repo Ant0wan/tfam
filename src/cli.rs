@@ -10,19 +10,19 @@ pub fn parse_commands() -> (Vec<String>, Vec<String>, Vec<String>) {
         match arg.as_str() {
             "-interactive" => commands.push(String::from("interactive")),
             "-concurrent" => commands.push(String::from("concurrent")),
-            "varfile" => {
+            "-var-file" => {
                 if let Some(file) = args.iter().skip_while(|x| x != &arg).nth(1) {
                     varfiles.push(file.to_string());
                 }
             }
             _ => {}
         }
-        match arg.starts_with() {
-            "-var-file=" => {
+        match arg.starts_with("-var-file=") {
+            true => {
                 if let Some(suffix) = arg.strip_prefix("-var-file=") {
                     varfiles.push(suffix.to_string());
                 } else {
-                    println!("Error, no varfile specified"); // check terraform error msg in this case
+                    println!("Error, no varfile specified. `-var-file=` cannot be empty.");
                 }
             }
             _ => {}
