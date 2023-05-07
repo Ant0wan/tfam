@@ -14,6 +14,7 @@ pub mod cli;
 pub mod exec;
 pub mod prompt;
 pub mod vars;
+pub mod workspace;
 
 fn main() -> io::Result<()> {
     let (mut args, mut cmd) = parse_commands();
