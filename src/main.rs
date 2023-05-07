@@ -21,7 +21,6 @@ fn main() -> io::Result<()> {
     if cmd.help {
         print_usage();
     }
-    println!("Commands: {:?}", cmd);
     if cmd.interactive {
         let current_dir = env::current_dir()?;
         let mut results = find_tfvars_files(&current_dir)?;
@@ -31,15 +30,6 @@ fn main() -> io::Result<()> {
     cmd.varfiles.sort();
     println!("Commands: {:?}", cmd);
     println!("Arguments: {:?}", args);
-    //println!("{:?}", files);
     execute_varfiles(args, cmd.varfiles, cmd.concurrent);
-    //            for element in ans.unwrap() {
-    //                println!("terraform {:?} -var-file {}", args.clone(), element);
-    //                let status = Command::new("terraform")
-    //                    .args(args.clone())
-    //                    .arg("-var-file")
-    //                    .arg(element)
-    //                    .status();
-    //    }
     Ok(())
 }

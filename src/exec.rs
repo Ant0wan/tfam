@@ -39,3 +39,11 @@ fn multi_threads_exec(args: Vec<String>, varfiles: Vec<String>) {
         t.join().unwrap();
     }
 }
+//            for element in ans.unwrap() {
+//                println!("terraform {:?} -var-file {}", args.clone(), element);
+//                let status = Command::new("terraform")
+//                    .args(args.clone())
+//                    .arg("-var-file")
+//                    .arg(element)
+//                    .status();
+//    }
