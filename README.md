@@ -24,6 +24,13 @@ flowchart TD
     F  --> t(terraform)
 ```
 
+## Specifications
+
+**Non-invasive**: Use the same options and commands as the Terraform binary with any `.tf` or `.tfvars` or Terraform configuration modification.
+
+**Non-destructive**: Preserve Terraform options and commands and pass them to the Terraform binary after parsing `tfam` arguments and options. Maintain the same behavior as the Terraform binary.
+
+
 ## License
 
 This repository is protected by the GPL3 (GNU General Public License v3.0). You can find the full text of the license in the LICENSE file. Please review and comply with the terms and conditions of the GPL3 license before using or contributing to this project.
