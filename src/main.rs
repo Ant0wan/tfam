@@ -2,6 +2,7 @@ extern crate walkdir;
 
 ///use std::process::Command;
 use cli::{parse_commands, print_usage};
+use exec::execute_varfiles;
 use prompt::select_tfvars_files;
 use std::env;
 use std::io;
@@ -10,6 +11,7 @@ use vars::find_tfvars_files;
 // tfam workspace clean// not yet implemented
 // tfam -interactive -var-file=toto=ok -var-file toto2 -interactive -concurrent plan -destroy
 pub mod cli;
+pub mod exec;
 pub mod prompt;
 pub mod vars;
 
@@ -29,9 +31,7 @@ fn main() -> io::Result<()> {
     println!("Commands: {:?}", cmd);
     println!("Arguments: {:?}", args);
     //println!("{:?}", files);
-    for f in cmd.varfiles {
-        println!("{:?} -var-file={:?}", args, f);
-    }
+    execute_varfiles(args, cmd.varfiles);
     //            for element in ans.unwrap() {
     //                println!("terraform {:?} -var-file {}", args.clone(), element);
     //                let status = Command::new("terraform")
