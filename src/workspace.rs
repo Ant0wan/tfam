@@ -1,6 +1,13 @@
-//TF_WORKSPACE
+use std::env;
 
-pub fn convert_path_to_workspace(path: String) -> String {
+pub fn get_workspace(path: String) -> String {
+    match env::var("TF_WORKSPACE") {
+        Ok(workspace) => return workspace,
+        Err(_) => return convert_path_to_workspace(path),
+    }
+}
+
+fn convert_path_to_workspace(path: String) -> String {
     let parts: Vec<&str> = path.split('/').collect();
     let joined = parts.join("_");
 

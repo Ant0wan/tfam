@@ -1,10 +1,8 @@
 use std::thread;
 
-use crate::workspace::convert_path_to_workspace;
+use crate::workspace::get_workspace;
 
 pub fn execute_varfiles(args: Vec<String>, varfiles: Vec<String>, concurrent: bool) {
-    // env vars:
-    // - TF_WORKSPACE=<tfvars_path>
     if concurrent {
         multi_threads_exec(args, varfiles);
     } else {
@@ -15,7 +13,7 @@ pub fn execute_varfiles(args: Vec<String>, varfiles: Vec<String>, concurrent: bo
 fn exec(args: Vec<String>, varfile: String) {
     println!(
         "TF_WORKSPACE={} {:?} -var-file={:?}",
-        convert_path_to_workspace(varfile.clone()),
+        get_workspace(varfile.clone()),
         args,
         varfile
     );
