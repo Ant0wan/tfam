@@ -26,10 +26,12 @@ flowchart TD
 
 ## Specifications
 
-**Non-invasive**: Use the same options and commands as the Terraform binary with any `.tf` or `.tfvars` or Terraform configuration modification.
+Terraform Apply Manager interacts with the Terraform binary and provides the following features:
 
-**Non-destructive**: Preserve Terraform options and commands and pass them to the Terraform binary after parsing `tfam` arguments and options. Maintain the same behavior as the Terraform binary.
+- **Non-invasive**: It reads and uses `.tf` and `.tfvars` files as they are, even if they have been modified by the user. This ensures that the user maintains full control over their configuration files and prevents interference with other processes that may also be using those files.
+- **Non-destructive**: It preserves any Terraform options and commands that are passed to it, and passes them on to the Terraform binary unchanged. This ensures that the behavior of the Terraform binary remains the same, and that any options or commands provided by the user are respected. The tool/script may add additional functionality, but it should not modify or remove any existing functionality.
 
+By providing these features, Terraform Apply Manager offers a seamless and flexible way to interact with the Terraform binary, without interfering with the user's workflow or modifying the behavior of the binary.
 
 ## License
 
