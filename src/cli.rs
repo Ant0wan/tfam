@@ -66,7 +66,6 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
         args.retain(|x| x != value);
     }
     args.retain(|e| !e.starts_with("-var-file"));
-    // also remove -var-files + cmd.varfiles from args
 
     (args, cmd)
 }
