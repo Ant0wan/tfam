@@ -1,6 +1,10 @@
 use std::thread;
 
 pub fn execute_varfiles(args: Vec<String>, varfiles: Vec<String>, concurrent: bool) {
+    // env vars:
+    // - TF_IN_AUTOMATION=true  <- if set at tfam call, -interactive will stay false
+    // - TF_WORKSPACE=<tfvars_path>
+
     if concurrent {
         multi_threads_exec(args, varfiles);
     } else {

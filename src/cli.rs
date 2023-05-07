@@ -4,6 +4,7 @@ use std::env;
 pub struct Commands {
     pub interactive: bool,
     pub concurrent: bool,
+    pub automation: bool,
     pub help: bool,
     pub commands: Vec<String>,
     pub varfiles: Vec<String>,
@@ -18,6 +19,7 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
     let mut cmd = Commands {
         interactive: false,
         concurrent: false,
+        automation: false,
         help: false,
         commands: Vec::new(),
         varfiles: Vec::new(),
@@ -26,7 +28,13 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
     let mut args_iter = args.iter().skip(1);
     while let Some(arg) = args_iter.next() {
         match arg.as_str() {
-            "-interactive" => cmd.interactive = true,
+            "-interactive" => match env::var("TF_IN_AUTOMATION") {
+                Ok(_) => {
+                    cmd.interactive = false;
+                    cmd.automation = true;
+                }
+                Err(_) => cmd.interactive = true,
+            },
             "-concurrent" => cmd.concurrent = true,
             "-help" => cmd.help = true,
             "-var-file" => {
@@ -48,7 +56,7 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
         }
     }
 
-    if cmd.interactive {
+    if cmd.interactive || cmd.automation {
         args.retain(|x| x != "-interactive");
     }
     if cmd.concurrent {
