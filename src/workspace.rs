@@ -8,6 +8,8 @@ pub fn get_workspace(path: String) -> String {
 }
 
 fn convert_path_to_workspace(path: String) -> String {
+    let parts: Vec<&str>;
+
     let without_extension = if path.ends_with(".tfvars.json") {
         path.trim_end_matches(".json").to_string()
     } else if path.ends_with(".tfvars") {
@@ -16,15 +18,14 @@ fn convert_path_to_workspace(path: String) -> String {
         path
     };
 
-    let parts: Vec<&str> = without_extension.split('/').collect();
+    parts = without_extension.split('/').collect();
     println!("{:?}", parts);
-//    if format.len()
-//    let mut fields: 
-//    let mut joined = parts.join("_");
-//    //let mut fields: Vec<&str> = path.trim().split('/').map(|field| field.trim()).collect();
-//    fields.reverse();
-//    println!("{:?}", fields);
+    //    if format.len()
+    //    let mut fields:
+    //    let mut joined = parts.join("_");
+    //    //let mut fields: Vec<&str> = path.trim().split('/').map(|field| field.trim()).collect();
+    //    fields.reverse();
+    //    println!("{:?}", fields);
 
     return without_extension.to_string();
 }
-
