@@ -12,7 +12,6 @@ pub fn find_tfvars_files(current_dir: &std::path::Path) -> Result<Vec<String>, i
             if let Some(file_name) = entry.path().file_name() {
                 if let Some(name_str) = file_name.to_str() {
                     if name_str.ends_with(".tfvars") || name_str.ends_with(".tfvars.json") {
-                        println!("{:?}", entry);
                         let entry_path =
                             fs::canonicalize(entry.path().display().to_string()).unwrap();
                         let relative_path = entry_path.strip_prefix(&current_dir).unwrap();
