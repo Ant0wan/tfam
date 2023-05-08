@@ -11,7 +11,7 @@ fn convert_path_to_workspace(path: String) -> String {
     let parts: Vec<&str>;
 
     let without_extension = if path.ends_with(".tfvars.json") {
-        path.trim_end_matches(".json").to_string()
+        path.trim_end_matches(".tfvars.json").to_string()
     } else if path.ends_with(".tfvars") {
         path.trim_end_matches(".tfvars").to_string()
     } else {
@@ -27,5 +27,7 @@ fn convert_path_to_workspace(path: String) -> String {
     //    fields.reverse();
     //    println!("{:?}", fields);
 
-    return without_extension.to_string();
+    return parts.join("_");
 }
+
+//fn custom_workspace_format(elements: Vec<String>)
