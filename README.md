@@ -33,6 +33,17 @@ Terraform Apply Manager interacts with the Terraform binary and provides the fol
 
 By providing these features, Terraform Apply Manager offers a seamless and flexible way to interact with the Terraform binary, without interfering with the user's workflow or modifying the behavior of the binary.
 
+## Usage
+
+`TF_WORKSPACE_FORMAT`: awk-like format for workspace from file path $1 = $n-1, $2 = $n-2 `-workspace-format='hello$2_$1_$3'
+
+`-interactive`: selection menu
+
+`-concurrent`:
+
+`-var-file`: multiple
+
+
 ## License
 
 This repository is protected by the GPL3 (GNU General Public License v3.0). You can find the full text of the license in the LICENSE file. Please review and comply with the terms and conditions of the GPL3 license before using or contributing to this project.
