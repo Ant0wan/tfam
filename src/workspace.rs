@@ -37,8 +37,6 @@ fn replace_placeholders(vector: Vec<&str>, str_expr: String) -> String {
         if let Some(s) = value {
             result = result.replace(&placeholder, s);
             result = result.replace(&negative_placeholder, s);
-        } else {
-            panic!("Index {} is out of range", i + 1);
         }
     }
 
