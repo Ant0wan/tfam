@@ -10,6 +10,7 @@ use vars::find_tfvars_files;
 
 // tfam workspace clean// not yet implemented
 // tfam -interactive -var-file=toto=ok -var-file toto2 -interactive -concurrent plan -destroy
+// tfam plan -interactive -workspace-format '$1_$2_$3'
 pub mod cli;
 pub mod exec;
 pub mod prompt;

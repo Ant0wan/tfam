@@ -13,17 +13,22 @@ fn convert_path_to_workspace(path: String, format: String) -> String {
     let without_extension = path.splitn(2, '.').next().unwrap_or(&path);
     parts = without_extension.split('/').collect();
     println!("{:?}", parts);
-    if !format.is_empty() {
-        println!("There is");
+    if format.is_empty() {
+        println!("Non Custom format");
+        return parts.join("_");
+    } else {
+        println!("Custom format");
+        return replace_placeholders(parts, format);
     }
-    //    if format.len()
-    //    let mut fields:
-    //    let mut joined = parts.join("_");
-    //    //let mut fields: Vec<&str> = path.trim().split('/').map(|field| field.trim()).collect();
-    //    fields.reverse();
-    //    println!("{:?}", fields);
-
-    return parts.join("_");
 }
 
-//fn custom_workspace_format(elements: Vec<String>)
+fn replace_placeholders(vector: Vec<&str>, str_expr: String) -> String {
+    let mut result = String::from(str_expr);
+
+    for (i, s) in vector.iter().enumerate() {
+        let placeholder = format!("${}", i + 1);
+        result = result.replace(&placeholder, s);
+    }
+
+    result
+}
