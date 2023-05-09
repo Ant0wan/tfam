@@ -36,6 +36,7 @@ By providing these features, Terraform Apply Manager offers a seamless and flexi
 ## Usage
 
 `TF_WORKSPACE_FORMAT`: awk-like format for workspace from file path $1 = $n-1, $2 = $n-2 `-workspace-format='hello$2_$1_$3'
+`export TF_WORKSPACE_FORMAT='$-1_$-3_$-2'`
 or
 `tfam -interactive -workspace-format='$-3_$-1_$-2`
 
