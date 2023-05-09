@@ -13,9 +13,9 @@ pub fn execute_varfiles(args: Vec<String>, cmd: Commands) {
 
 fn exec(args: Vec<String>, varfile: String, workspaceformat: String) {
     println!(
-        "TF_WORKSPACE={} {:?} -var-file={:?}",
+        "TF_WORKSPACE={} terraform {} -var-file={:?}",
         get_workspace(varfile.clone(), workspaceformat),
-        args,
+        args.join(" "),
         varfile
     );
 }

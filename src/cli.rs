@@ -16,7 +16,7 @@ pub fn print_usage() {
 }
 
 pub fn parse_commands() -> (Vec<String>, Commands) {
-    let mut args: Vec<String> = env::args().collect();
+    let mut args: Vec<String> = env::args().skip(1).collect();
     let mut cmd = Commands {
         interactive: false,
         concurrent: false,
@@ -28,7 +28,7 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
     };
     let mut allformats: Vec<String> = Vec::new();
 
-    let mut args_iter = args.iter().skip(1);
+    let mut args_iter = args.iter();
     while let Some(arg) = args_iter.next() {
         match arg.as_str() {
             "-interactive" => match env::var("TF_IN_AUTOMATION") {
@@ -75,7 +75,6 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
             _ => {}
         }
     }
-
     if cmd.interactive || cmd.automation {
         args.retain(|x| x != "-interactive");
     }
