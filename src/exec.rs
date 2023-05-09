@@ -11,10 +11,10 @@ pub fn execute_varfiles(args: Vec<String>, cmd: Commands) {
     }
 }
 
-fn exec(args: Vec<String>, varfile: String) {
+fn exec(args: Vec<String>, varfile: String, workspaceformat: String) {
     println!(
         "TF_WORKSPACE={} {:?} -var-file={:?}",
-        get_workspace(varfile.clone()),
+        get_workspace(varfile.clone(), workspaceformat),
         args,
         varfile
     );
@@ -22,7 +22,7 @@ fn exec(args: Vec<String>, varfile: String) {
 
 fn single_threaded_exec(args: Vec<String>, cmd: Commands) {
     for f in cmd.varfiles {
-        exec(args.clone(), f);
+        exec(args.clone(), f, cmd.workspaceformat.clone());
     }
 }
 
@@ -32,8 +32,9 @@ fn multi_threads_exec(args: Vec<String>, cmd: Commands) {
         .into_iter()
         .map(|f| {
             let args = args.clone();
+            let workspaceformat = cmd.workspaceformat.clone();
             thread::spawn(move || {
-                exec(args, f);
+                exec(args, f, workspaceformat);
             })
         })
         .collect();

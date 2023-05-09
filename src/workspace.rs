@@ -1,18 +1,21 @@
 use std::env;
 
-pub fn get_workspace(path: String) -> String {
+pub fn get_workspace(path: String, format: String) -> String {
     match env::var("TF_WORKSPACE") {
         Ok(workspace) => return workspace,
-        Err(_) => return convert_path_to_workspace(path),
+        Err(_) => return convert_path_to_workspace(path, format),
     }
 }
 
-fn convert_path_to_workspace(path: String) -> String {
+fn convert_path_to_workspace(path: String, format: String) -> String {
     let parts: Vec<&str>;
 
     let without_extension = path.splitn(2, '.').next().unwrap_or(&path);
     parts = without_extension.split('/').collect();
     println!("{:?}", parts);
+    //  if format.len() > 0 {
+    //      println!("There is");
+    //  }
     //    if format.len()
     //    let mut fields:
     //    let mut joined = parts.join("_");

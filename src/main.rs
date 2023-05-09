@@ -17,7 +17,7 @@ pub mod vars;
 pub mod workspace;
 
 fn main() -> io::Result<()> {
-    let (mut args, mut cmd) = parse_commands();
+    let (args, mut cmd) = parse_commands();
     if cmd.help {
         print_usage();
     }
