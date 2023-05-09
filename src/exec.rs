@@ -18,6 +18,11 @@ fn exec(args: Vec<String>, varfile: String, workspaceformat: String) {
         args.join(" "),
         varfile
     );
+    //                let status = Command::new("terraform")
+    //                    .args(args.clone())
+    //                    .arg("-var-file")
+    //                    .arg(element)
+    //                    .status();
 }
 
 fn single_threaded_exec(args: Vec<String>, cmd: Commands) {
@@ -42,11 +47,3 @@ fn multi_threads_exec(args: Vec<String>, cmd: Commands) {
         t.join().unwrap();
     }
 }
-//            for element in ans.unwrap() {
-//                println!("terraform {:?} -var-file {}", args.clone(), element);
-//                let status = Command::new("terraform")
-//                    .args(args.clone())
-//                    .arg("-var-file")
-//                    .arg(element)
-//                    .status();
-//    }
