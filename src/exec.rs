@@ -26,6 +26,10 @@ fn exec(args: Vec<String>, varfile: String, workspaceformat: String) {
 }
 
 fn single_threaded_exec(args: Vec<String>, cmd: Commands) {
+    if cmd.varfiles.is_empty() {
+        println!("terraform {}", args.join(" "));
+        return;
+    }
     for f in cmd.varfiles {
         exec(args.clone(), f, cmd.workspaceformat.clone());
     }
