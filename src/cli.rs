@@ -6,7 +6,7 @@ pub struct Commands {
     pub concurrent: bool,
     pub automation: bool,
     pub help: bool,
-    pub format: String,
+    pub workspaceformat: String,
     pub commands: Vec<String>,
     pub varfiles: Vec<String>,
 }
@@ -22,7 +22,7 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
         concurrent: false,
         automation: false,
         help: false,
-        format: String::new(),
+        workspaceformat: String::new(),
         commands: Vec::new(),
         varfiles: Vec::new(),
     };
@@ -47,7 +47,7 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
             }
             "-workspace-format" => {
                 if let Some(file) = args_iter.next() {
-                    cmd.format = file.to_string();
+                    cmd.workspaceformat = file.to_string();
                     allformats.push(file.to_string());
                 }
             }
@@ -66,7 +66,7 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
         match arg.starts_with("-workspace-format=") {
             true => {
                 if let Some(suffix) = arg.strip_prefix("-workspace-format=") {
-                    cmd.format = suffix.to_string();
+                    cmd.workspaceformat = suffix.to_string();
                     allformats.push(suffix.to_string());
                 } else {
                     println!("Error, no format specified. `-workspace-format=` cannot be empty.");
