@@ -1,3 +1,4 @@
+use std::process::Command;
 use std::thread;
 
 use crate::cli::Commands;
@@ -12,22 +13,25 @@ pub fn execute_varfiles(args: Vec<String>, cmd: Commands) {
 }
 
 fn exec(args: Vec<String>, varfile: String, workspaceformat: String) {
+    let workspace = get_workspace(varfile.clone(), workspaceformat);
     println!(
         "TF_WORKSPACE={} terraform {} -var-file={:?}",
-        get_workspace(varfile.clone(), workspaceformat),
+        workspace,
         args.join(" "),
         varfile
     );
-    //                let status = Command::new("terraform")
-    //                    .args(args.clone())
-    //                    .arg("-var-file")
-    //                    .arg(element)
-    //                    .status();
+    let _status = Command::new("terraform")
+        .env("TF_WORKSPACE", workspace)
+        .args(args)
+        .arg("-var-file")
+        .arg(varfile)
+        .status();
 }
 
 fn single_threaded_exec(args: Vec<String>, cmd: Commands) {
     if cmd.varfiles.is_empty() {
         println!("terraform {}", args.join(" "));
+        let _status = Command::new("terraform").args(args).status();
         return;
     }
     for f in cmd.varfiles {
