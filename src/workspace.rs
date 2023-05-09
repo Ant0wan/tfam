@@ -12,12 +12,10 @@ fn convert_path_to_workspace(path: String, format: String) -> String {
 
     let without_extension = path.splitn(2, '.').next().unwrap_or(&path);
     parts = without_extension.split('/').collect();
-    println!("{:?}", parts);
+    // println!("{:?}", parts);
     if format.is_empty() {
-        println!("Non Custom format");
         return parts.join("_");
     } else {
-        println!("Custom format");
         return replace_placeholders(parts, format);
     }
 }

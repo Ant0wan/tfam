@@ -29,8 +29,8 @@ fn main() -> io::Result<()> {
         cmd.varfiles = select_tfvars_files(cmd.varfiles).unwrap();
     }
     cmd.varfiles.sort();
-    println!("Commands: {:?}", cmd);
-    println!("Arguments: {:?}", args);
+    // println!("Commands: {:?}", cmd);
+    // println!("Arguments: {:?}", args);
     execute_varfiles(args, cmd);
     Ok(())
 }
