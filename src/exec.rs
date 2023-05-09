@@ -1,12 +1,13 @@
 use std::thread;
 
+use crate::cli::Commands;
 use crate::workspace::get_workspace;
 
-pub fn execute_varfiles(args: Vec<String>, varfiles: Vec<String>, concurrent: bool) {
-    if concurrent {
-        multi_threads_exec(args, varfiles);
+pub fn execute_varfiles(args: Vec<String>, cmd: Commands) {
+    if cmd.concurrent {
+        multi_threads_exec(args, cmd);
     } else {
-        single_threaded_exec(args, varfiles);
+        single_threaded_exec(args, cmd);
     }
 }
 
@@ -19,14 +20,15 @@ fn exec(args: Vec<String>, varfile: String) {
     );
 }
 
-fn single_threaded_exec(args: Vec<String>, varfiles: Vec<String>) {
-    for f in varfiles {
+fn single_threaded_exec(args: Vec<String>, cmd: Commands) {
+    for f in cmd.varfiles {
         exec(args.clone(), f);
     }
 }
 
-fn multi_threads_exec(args: Vec<String>, varfiles: Vec<String>) {
-    let threads: Vec<_> = varfiles
+fn multi_threads_exec(args: Vec<String>, cmd: Commands) {
+    let threads: Vec<_> = cmd
+        .varfiles
         .into_iter()
         .map(|f| {
             let args = args.clone();

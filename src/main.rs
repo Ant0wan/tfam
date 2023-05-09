@@ -30,6 +30,6 @@ fn main() -> io::Result<()> {
     cmd.varfiles.sort();
     println!("Commands: {:?}", cmd);
     println!("Arguments: {:?}", args);
-    execute_varfiles(args, cmd.varfiles, cmd.concurrent);
+    execute_varfiles(args, cmd);
     Ok(())
 }
