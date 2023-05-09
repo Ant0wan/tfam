@@ -14,7 +14,10 @@ fn convert_path_to_workspace(path: String, format: String) -> String {
     parts = without_extension.split('/').collect();
     // println!("{:?}", parts);
     if format.is_empty() {
-        return parts.join("_");
+        match env::var("TF_WORKSPACE_FORMAT") {
+            Ok(format) => return replace_placeholders(parts, format),
+            Err(_) => return parts.join("_"),
+        }
     } else {
         return replace_placeholders(parts, format);
     }
