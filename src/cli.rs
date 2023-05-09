@@ -26,6 +26,7 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
         commands: Vec::new(),
         varfiles: Vec::new(),
     };
+    let mut allformats: Vec<String> = Vec::new();
 
     let mut args_iter = args.iter().skip(1);
     while let Some(arg) = args_iter.next() {
@@ -47,6 +48,7 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
             "-workspace-format" => {
                 if let Some(file) = args_iter.next() {
                     cmd.format = file.to_string();
+                    allformats.push(file.to_string());
                 }
             }
             _ => {}
@@ -65,6 +67,7 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
             true => {
                 if let Some(suffix) = arg.strip_prefix("-workspace-format=") {
                     cmd.format = suffix.to_string();
+                    allformats.push(suffix.to_string());
                 } else {
                     println!("Error, no format specified. `-workspace-format=` cannot be empty.");
                 }
@@ -83,6 +86,10 @@ pub fn parse_commands() -> (Vec<String>, Commands) {
         args.retain(|x| x != value);
     }
     args.retain(|e| !e.starts_with("-var-file"));
+    for fmt in &allformats {
+        args.retain(|x| x != fmt);
+    }
+    args.retain(|e| !e.starts_with("-workspace-format"));
 
     (args, cmd)
 }
