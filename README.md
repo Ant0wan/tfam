@@ -46,6 +46,13 @@ or
 
 `-var-file`: multiple
 
+## Configuration
+
+### Autocompletion
+
+```shell
+complete -W "-interactive -concurrent -workspace-format" -d -f -C $(which terraform) tfam
+```
 
 ## License
 
