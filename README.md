@@ -35,9 +35,12 @@ By providing these features, Terraform Apply Manager offers a seamless and flexi
 
 ## Usage
 
-`TF_WORKSPACE_FORMAT`: awk-like format for workspace from file path $1 = $n-1, $2 = $n-2 `-workspace-format='hello$2_$1_$3'
+`TFAM_EXE`: `TFAM_EXE=tfexe tfam init` or `TFAM_EXE=terraform tfam init` or `TFAM_EXE=path/to/your/binary tfam init`
+
+`TF_WORKSPACE_FORMAT`: awk-like format for workspace from file path $1=$n-1, $2=$n-2 `-workspace-format='hello$2_$1_$3'
+
 `export TF_WORKSPACE_FORMAT='$-3_$-1_$-2'`
-or
+
 `tfam -interactive -workspace-format='$-3_$-1_$-2`
 
 `-interactive`: selection menu
@@ -53,6 +56,10 @@ or
 ```shell
 complete -W "-interactive -concurrent -workspace-format" -d -f -C $(which terraform) tfam
 ```
+
+## Coming features
+
+When performing `workspace` command + -interactive, it will display a workspace menu list.
 
 ## License
 
