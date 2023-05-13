@@ -1,5 +1,6 @@
 use std::env;
 use std::process::Command;
+use std::process::ExitStatus;
 use std::thread;
 
 use crate::cli::Commands;
@@ -17,7 +18,12 @@ pub fn execute_varfiles(args: Vec<String>, cmd: Commands) {
     }
 }
 
-fn exec(args: Vec<String>, varfile: String, workspaceformat: String, executable: String) {
+fn exec(
+    args: Vec<String>,
+    varfile: String,
+    workspaceformat: String,
+    executable: String,
+) -> Result<ExitStatus, std::io::Error> {
     let workspace = get_workspace(varfile.clone(), workspaceformat);
     println!(
         "TF_WORKSPACE={} {} {} -var-file={:?}",
@@ -26,12 +32,13 @@ fn exec(args: Vec<String>, varfile: String, workspaceformat: String, executable:
         args.join(" "),
         varfile
     );
-    let _status = Command::new(executable)
+    let mut exe = Command::new(executable)
         .env("TF_WORKSPACE", workspace)
         .args(args)
         .arg("-var-file")
         .arg(varfile)
-        .status();
+        .spawn()?;
+    exe.wait()
 }
 
 fn single_threaded_exec(args: Vec<String>, cmd: Commands, executable: String) {
