@@ -6,6 +6,8 @@ use exec::exec;
 use prompt::select_tfvars_files;
 use std::env;
 use std::io;
+use std::process::exit;
+use std::process::ExitCode;
 use vars::find_tfvars_files;
 
 // tfam workspace clean// not yet implemented
@@ -17,7 +19,7 @@ pub mod prompt;
 pub mod vars;
 pub mod workspace;
 
-fn main() -> io::Result<()> {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let (args, mut cmd) = parse_commands();
     if cmd.help {
         print_usage();
@@ -29,6 +31,6 @@ fn main() -> io::Result<()> {
         cmd.varfiles = select_tfvars_files(cmd.varfiles).unwrap();
     }
     cmd.varfiles.sort();
-    exec(&args, &cmd);
-    Ok(())
+    let exit_status = exec(&args, &cmd);
+    exit(exit_status.code().unwrap_or(1));
 }
