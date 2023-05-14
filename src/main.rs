@@ -5,9 +5,7 @@ use cli::{parse_commands, print_usage};
 use exec::exec;
 use prompt::select_tfvars_files;
 use std::env;
-use std::io;
 use std::process::exit;
-use std::process::ExitCode;
 use vars::find_tfvars_files;
 
 // tfam workspace clean// not yet implemented

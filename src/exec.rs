@@ -3,7 +3,7 @@ use std::os::unix::process::ExitStatusExt;
 use std::process::Command;
 use std::process::ExitStatus;
 
-use std::thread;
+//use std::thread;
 
 use crate::cli::Commands;
 use crate::workspace::get_workspace;
@@ -28,7 +28,7 @@ pub fn exec(args: &Vec<String>, cmd: &Commands) -> ExitStatus {
                 for f in &cmd.varfiles {
                     let workspace = get_workspace(f, &cmd.workspaceformat);
                     println!(
-                        "TF_WORKSPACE={} {} {} -var-file={:?}",
+                        "TF_WORKSPACE={} {} {} -var-file {:?}",
                         workspace,
                         executable,
                         args.join(" "),
