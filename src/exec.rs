@@ -16,23 +16,29 @@ pub fn exec(args: &Vec<String>, cmd: &Commands) {
     let _exit_status = match cmd.varfiles.is_empty() {
         true => {
             println!("{} {}", executable, args.join(" "));
-            exe.status();
+            exe.status().expect("failed to execute {executable}");
         }
-        false => {
-            for f in &cmd.varfiles {
-                let workspace = get_workspace(f, &cmd.workspaceformat);
-                println!(
-                    "TF_WORKSPACE={} {} {} -var-file={:?}",
-                    workspace,
-                    executable,
-                    args.join(" "),
-                    f
-                );
-                exe.env("TF_WORKSPACE", workspace)
-                    .arg("-var-file")
-                    .arg(f)
-                    .status();
+        false => match cmd.concurrent {
+            true => {
+                exe.status().expect("failed to execute {executable}"); //debug
             }
-        }
+            false => {
+                for f in &cmd.varfiles {
+                    let workspace = get_workspace(f, &cmd.workspaceformat);
+                    println!(
+                        "TF_WORKSPACE={} {} {} -var-file={:?}",
+                        workspace,
+                        executable,
+                        args.join(" "),
+                        f
+                    );
+                    exe.env("TF_WORKSPACE", workspace)
+                        .arg("-var-file")
+                        .arg(f)
+                        .status()
+                        .expect("failed to execute {executable}");
+                }
+            }
+        },
     };
 }
