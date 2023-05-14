@@ -6,7 +6,7 @@ use std::thread;
 use crate::cli::Commands;
 use crate::workspace::get_workspace;
 
-pub fn execute(args: &Vec<String>, cmd: &Commands) {
+pub fn exec(args: &Vec<String>, cmd: &Commands) {
     let executable = match env::var("TFAM_EXE") {
         Ok(exe) => exe,
         Err(_) => "terraform".to_string(),
