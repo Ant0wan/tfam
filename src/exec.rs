@@ -12,7 +12,7 @@ pub fn exec(args: &Vec<String>, cmd: &Commands) -> ExitStatus {
     let executable = env::var("TFAM_EXE").unwrap_or_else(|_| "terraform".to_string());
     let mut exe = Command::new(&executable);
     let exe = exe.args(args);
-    let mut last_error: Option<ExitStatus> = None;
+    let mut last_error = ExitStatus::from_raw(0);
 
     match cmd.varfiles.is_empty() {
         true => {
@@ -38,18 +38,13 @@ pub fn exec(args: &Vec<String>, cmd: &Commands) -> ExitStatus {
                         .env("TF_WORKSPACE", workspace)
                         .arg("-var-file")
                         .arg(f)
-                        .status();
-
-                    if let Err(err) = status_result {
-                        if let Some(code) = err.raw_os_error() {
-                            last_error = Some(ExitStatus::from_raw(code));
-                        }
+                        .status()
+                        .expect(&format!("failed to execute {}", executable));
+                    if !status_result.success() {
+                        last_error = status_result;
                     }
                 }
-                if let Some(error) = last_error {
-                    return error;
-                }
-                ExitStatus::from_raw(0)
+                last_error
             }
         },
     }
