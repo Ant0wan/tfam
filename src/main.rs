@@ -2,7 +2,7 @@ extern crate walkdir;
 
 ///use std::process::Command;
 use cli::{parse_commands, print_usage};
-use exec::execute_varfiles;
+use exec::execute;
 use prompt::select_tfvars_files;
 use std::env;
 use std::io;
@@ -29,8 +29,6 @@ fn main() -> io::Result<()> {
         cmd.varfiles = select_tfvars_files(cmd.varfiles).unwrap();
     }
     cmd.varfiles.sort();
-    // println!("Commands: {:?}", cmd);
-    // println!("Arguments: {:?}", args);
-    execute_varfiles(args, cmd);
+    execute(&args, &cmd);
     Ok(())
 }

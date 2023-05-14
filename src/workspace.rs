@@ -1,13 +1,13 @@
 use std::env;
 
-pub fn get_workspace(path: String, format: String) -> String {
+pub fn get_workspace(path: &String, format: &String) -> String {
     match env::var("TF_WORKSPACE") {
         Ok(workspace) => return workspace,
         Err(_) => return convert_path_to_workspace(path, format),
     }
 }
 
-fn convert_path_to_workspace(path: String, format: String) -> String {
+fn convert_path_to_workspace(path: &String, format: &String) -> String {
     let parts: Vec<&str>;
 
     let without_extension = path.splitn(2, '.').next().unwrap_or(&path);
@@ -15,7 +15,7 @@ fn convert_path_to_workspace(path: String, format: String) -> String {
     // println!("{:?}", parts);
     if format.is_empty() {
         match env::var("TF_WORKSPACE_FORMAT") {
-            Ok(format) => return replace_placeholders(parts, format),
+            Ok(format) => return replace_placeholders(parts, &format),
             Err(_) => return parts.join("_"),
         }
     } else {
@@ -23,7 +23,7 @@ fn convert_path_to_workspace(path: String, format: String) -> String {
     }
 }
 
-fn replace_placeholders(vector: Vec<&str>, str_expr: String) -> String {
+fn replace_placeholders(vector: Vec<&str>, str_expr: &String) -> String {
     let mut result = String::from(str_expr.clone());
 
     for i in 0..vector.len() {
