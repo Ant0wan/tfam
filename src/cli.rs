@@ -2,13 +2,14 @@ use std::env;
 
 #[derive(Debug)]
 pub struct Commands {
-    pub interactive: bool,
-    pub concurrent: bool,
     pub automation: bool,
+    pub concurrent: bool,
     pub help: bool,
-    pub workspaceformat: String,
+    pub interactive: bool,
+    pub bin: String,
     pub commands: Vec<String>,
     pub varfiles: Vec<String>,
+    pub workspaceformat: String,
 }
 
 pub fn print_usage() {
@@ -18,15 +19,17 @@ pub fn print_usage() {
 pub fn parse_commands() -> (Vec<String>, Commands) {
     let mut args: Vec<String> = env::args().skip(1).collect();
     let mut cmd = Commands {
-        interactive: false,
-        concurrent: false,
         automation: false,
+        concurrent: false,
         help: false,
-        workspaceformat: String::new(),
+        interactive: false,
+        bin: String::new(),
         commands: Vec::new(),
         varfiles: Vec::new(),
+        workspaceformat: String::new(),
     };
     let mut allformats: Vec<String> = Vec::new();
+    cmd.bin = env::var("TFAM_EXE").unwrap_or_else(|_| "terraform".to_string());
 
     let mut args_iter = args.iter();
     while let Some(arg) = args_iter.next() {
