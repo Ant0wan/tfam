@@ -49,16 +49,16 @@ pub fn exec(args: &Vec<String>, cmd: &Commands) -> ExitStatus {
                     .varfiles
                     .iter()
                     .map(|f| {
-                        thread::spawn(|| {
+                        thread::spawn(move || {
                             process_file(args, cmd, f, &executable, exe);
                         })
                     })
                     .collect();
                 for handle in handles {
-                    let status_result = handle.join().unwrap();
-                    if !status_result.success() {
-                        last_error = status_result;
-                    }
+                    let _status_result = handle.join().unwrap();
+                    //if !status_result.success() {
+                    //    last_error = status_result;
+                    // }
                 }
                 last_error
             }
