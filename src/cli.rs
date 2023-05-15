@@ -12,7 +12,7 @@ pub struct Commands {
 }
 
 pub fn print_usage() {
-    println!("Usage: tfam [global options] <subcommand> [args]");
+    println!("Usage: tfam [global options] <subcommand> [args]"); // To complete
 }
 
 pub fn parse_commands() -> (Vec<String>, Commands) {
