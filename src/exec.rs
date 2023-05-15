@@ -45,10 +45,22 @@ pub fn exec(args: &Vec<String>, cmd: &Commands) -> ExitStatus {
         }
         false => match cmd.concurrent {
             true => {
-                //        let handle = thread::spawn(|| {
-                //        });
-                //        handle.join().unwrap();
-                exe.status().expect("TEST")
+                let handles: Vec<_> = cmd
+                    .varfiles
+                    .iter()
+                    .map(|f| {
+                        thread::spawn(|| {
+                            process_file(args, cmd, f, &executable, exe);
+                        })
+                    })
+                    .collect();
+                for handle in handles {
+                    let status_result = handle.join().unwrap();
+                    if !status_result.success() {
+                        last_error = status_result;
+                    }
+                }
+                last_error
             }
             false => {
                 for f in &cmd.varfiles {
