@@ -34,7 +34,7 @@ fn process_file(
 pub fn exec(args: &Vec<String>, cmd: &Commands) -> ExitStatus {
     let executable = env::var("TFAM_EXE").unwrap_or_else(|_| "terraform".to_string());
     let mut exe = Command::new(&executable);
-    let mut exe = exe.args(args);
+    let exe = exe.args(args);
     let mut last_error = ExitStatus::from_raw(0);
 
     match cmd.varfiles.is_empty() {
