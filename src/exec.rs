@@ -1,10 +1,7 @@
-use std::env;
 use std::os::unix::process::ExitStatusExt;
 use std::process::Command;
 use std::process::ExitStatus;
 use std::thread;
-
-//use std::thread;
 
 use crate::cli::Commands;
 use crate::workspace::get_workspace;
