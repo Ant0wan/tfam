@@ -29,7 +29,6 @@ download_path=$(mktemp -d -t tfam.XXXXXXXXXX)
 download_executable="${download_path}/tfam"
 echo "Downloading tfam latest version"
 wget --quiet "https://github.com/Ant0wan/tfam/releases/latest/download/tfam_${bin}" -O "${download_executable}"
-
 echo "Downloaded successfully"
 dest="${TFEXE_INSTALL_PATH:-/usr/local/bin}/"
 echo "Installing tfam to ${dest} ..."
@@ -43,6 +42,5 @@ if [ $retVal -ne 0 ]; then
 	echo "Failed to install tfam"
 	exit $retVal
 fi
-
 echo "Cleaning temporary downloaded files directory ${download_path} ..."
 rm -rf "${download_path}"
