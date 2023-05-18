@@ -3,13 +3,36 @@ use std::env;
 #[derive(Debug)]
 pub struct Commands {
     pub automation: bool,
+    pub bin: String,
+    pub commands: Vec<String>,
     pub concurrent: bool,
     pub help: bool,
     pub interactive: bool,
-    pub bin: String,
-    pub commands: Vec<String>,
+    pub tfargs: Vec<String>,
     pub varfiles: Vec<String>,
     pub workspaceformat: String,
+}
+
+impl Commands {
+    fn new() -> Self {
+        Commands {
+            automation: false,
+            bin: String::new(),
+            commands: Vec::new(),
+            concurrent: false,
+            help: false,
+            interactive: false,
+            tfargs: Vec::new(),
+            varfiles: Vec::new(),
+            workspaceformat: String::new(),
+        }
+    }
+
+    //    fn do_work(&self) {
+    //        // Implement the work that each thread should perform on an instance of MyStruct
+    //        // You can access the fields of your struct using `self.field_name`
+    //        // Perform the necessary operations here
+    //    }
 }
 
 pub fn print_usage() {
@@ -18,17 +41,9 @@ pub fn print_usage() {
 
 pub fn parse_commands() -> (Vec<String>, Commands) {
     let mut args: Vec<String> = env::args().skip(1).collect();
-    let mut cmd = Commands {
-        automation: false,
-        concurrent: false,
-        help: false,
-        interactive: false,
-        bin: String::new(),
-        commands: Vec::new(),
-        varfiles: Vec::new(),
-        workspaceformat: String::new(),
-    };
+    let mut cmd = Commands::new();
     let mut allformats: Vec<String> = Vec::new();
+
     cmd.bin = env::var("TFAM_EXE").unwrap_or_else(|_| "terraform".to_string());
 
     let mut args_iter = args.iter();
