@@ -33,6 +33,14 @@ Terraform Apply Manager interacts with the Terraform binary and provides the fol
 
 By providing these features, Terraform Apply Manager offers a seamless and flexible way to interact with the Terraform binary, without interfering with the user's workflow or modifying the behavior of the binary.
 
+## Installation
+
+To install tfam, simply run the install.sh script provided in this repository. The script will automatically download and install the necessary dependencies, and set up tfexe on your system.
+
+```shell
+wget -q -O -  https://raw.githubusercontent.com/Ant0wan/tfam/master/install.sh | sh
+```
+
 ## Usage
 
 `TFAM_EXE`: `TFAM_EXE=tfexe tfam init` or `TFAM_EXE=terraform tfam init` or `TFAM_EXE=path/to/your/binary tfam init`
