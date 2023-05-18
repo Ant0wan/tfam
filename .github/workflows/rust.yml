@@ -69,7 +69,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: tfam_${{ matrix.target }}
-        path: ${{ matrix.target n}/release/tfam
+        path: ${{ matrix.target }}/release/tfam
   test:
     needs: [format, lint, build]
     runs-on: ${{ matrix.os }}
