@@ -40,9 +40,7 @@ pub fn exec(args: &Vec<String>, cmd: &Commands) -> ExitStatus {
                 let handles: Vec<_> = cmd
                     .varfiles
                     .iter()
-                    .map(|f| {
-                        thread::spawn(move || process_file(args, cmd, &f))
-                    })
+                    .map(|f| thread::spawn(move || process_file(args, cmd, f)))
                     .collect();
                 for handle in handles {
                     let status_result = handle.join().unwrap();
