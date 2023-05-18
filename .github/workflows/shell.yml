@@ -1,6 +1,9 @@
 name: Shell
 
-on: push
+on:
+  push:
+    paths:
+      - '*.sh'
 
 permissions: {}
 
