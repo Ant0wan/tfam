@@ -11,7 +11,6 @@
 
 *tfam* stands for *"Terraform Apply Manager"*
 
-
 ## How it works
 
 ```mermaid
