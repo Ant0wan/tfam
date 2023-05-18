@@ -41,10 +41,7 @@ pub fn exec(args: &Vec<String>, cmd: &Commands) -> ExitStatus {
                     .varfiles
                     .iter()
                     .map(|f| {
-                        let args = args.clone();
-                        let cmd = cmd.clone();
-
-                        thread::spawn(move || process_file(&args, cmd, &f))
+                        thread::spawn(move || process_file(args, cmd, &f))
                     })
                     .collect();
                 for handle in handles {
