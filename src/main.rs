@@ -1,6 +1,7 @@
 extern crate walkdir;
 
-use cli::{parse_commands, print_usage};
+use cli::print_usage;
+use cli::Commands;
 use exec::exec;
 use prompt::select_tfvars_files;
 use std::env;
@@ -14,7 +15,8 @@ pub mod vars;
 pub mod workspace;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let (args, mut cmd) = parse_commands();
+    let args = env::args().skip(1).collect();
+    let mut cmd = Commands::parse_commands(args);
     if cmd.help {
         print_usage();
     }
@@ -25,6 +27,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         cmd.varfiles = select_tfvars_files(cmd.varfiles).unwrap();
     }
     cmd.varfiles.sort();
-    let exit_status = exec(&args, &cmd);
+    let exit_status = exec(&cmd.tfargs, &cmd);
     exit(exit_status.code().unwrap_or(1));
 }
