@@ -6,17 +6,17 @@ use std::thread;
 use crate::cli::Commands;
 use crate::workspace::get_workspace;
 
-fn process_file(args: &Vec<String>, cmd: &Commands, file: &String) -> ExitStatus {
+fn process_file(cmd: &Commands, file: &String) -> ExitStatus {
     let workspace = get_workspace(file, &cmd.workspaceformat);
     println!(
         "TF_WORKSPACE={} {} {} -var-file {:?}",
         workspace,
         cmd.bin,
-        args.join(" "),
+        cmd.tfargs.join(" "),
         file
     );
     Command::new(&cmd.bin)
-        .args(args)
+        .args(&cmd.tfargs)
         .env("TF_WORKSPACE", workspace)
         .arg("-var-file")
         .arg(file)
@@ -24,14 +24,14 @@ fn process_file(args: &Vec<String>, cmd: &Commands, file: &String) -> ExitStatus
         .expect(&format!("failed to execute {}", cmd.bin))
 }
 
-pub fn exec(args: &Vec<String>, cmd: &Commands) -> ExitStatus {
+pub fn exec(cmd: &Commands) -> ExitStatus {
     let mut last_error = ExitStatus::from_raw(0);
 
     match cmd.varfiles.is_empty() {
         true => {
-            println!("{} {}", cmd.bin, args.join(" "));
+            println!("{} {}", cmd.bin, cmd.tfargs.join(" "));
             Command::new(&cmd.bin)
-                .args(args)
+                .args(&cmd.tfargs)
                 .status()
                 .expect(&format!("failed to execute {}", cmd.bin))
         }
@@ -40,7 +40,7 @@ pub fn exec(args: &Vec<String>, cmd: &Commands) -> ExitStatus {
                 let handles: Vec<_> = cmd
                     .varfiles
                     .iter()
-                    .map(|f| thread::spawn(move || process_file(args, cmd, f)))
+                    .map(|f| thread::spawn(move || process_file(cmd, f)))
                     .collect();
                 for handle in handles {
                     let status_result = handle.join().unwrap();
@@ -52,7 +52,7 @@ pub fn exec(args: &Vec<String>, cmd: &Commands) -> ExitStatus {
             }
             false => {
                 for file in &cmd.varfiles {
-                    let status_result = process_file(args, cmd, file);
+                    let status_result = process_file(cmd, file);
                     if !status_result.success() {
                         last_error = status_result;
                     }

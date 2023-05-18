@@ -27,6 +27,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         cmd.varfiles = select_tfvars_files(cmd.varfiles).unwrap();
     }
     cmd.varfiles.sort();
-    let exit_status = exec(&cmd.tfargs, &cmd);
+    let exit_status = exec(&cmd);
     exit(exit_status.code().unwrap_or(1));
 }
