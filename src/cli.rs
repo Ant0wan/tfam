@@ -27,12 +27,6 @@ impl Commands {
             workspaceformat: String::new(),
         }
     }
-
-    //    fn do_work(&self) {
-    //        // Implement the work that each thread should perform on an instance of MyStruct
-    //        // You can access the fields of your struct using `self.field_name`
-    //        // Perform the necessary operations here
-    //    }
 }
 
 pub fn print_usage() {
