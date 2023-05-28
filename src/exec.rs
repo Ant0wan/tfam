@@ -36,7 +36,7 @@ pub fn exec(cmd: Arc<Mutex<Commands>>) -> ExitStatus {
             Command::new(&cmd_lock.bin)
                 .args(&cmd_lock.tfargs)
                 .status()
-                .expect(&format!("failed to execute {}", cmd_lock.bin))
+                .unwrap_or_else(|_| panic!("failed to execute {}", cmd_lock.bin))
         }
         false => match cmd_lock.concurrent {
             true => {
