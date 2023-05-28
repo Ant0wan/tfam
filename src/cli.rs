@@ -35,6 +35,7 @@ pub fn print_usage() {
 }
 
 impl Commands {
+    #[must_use]
     pub fn parse_commands(mut args: Vec<String>) -> Self {
         let mut cmd: Commands = Commands::new();
         let mut allformats: Vec<String> = Vec::new();

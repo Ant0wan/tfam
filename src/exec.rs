@@ -26,7 +26,10 @@ fn process_file(cmd: &Commands, file: &String) -> ExitStatus {
         .unwrap_or_else(|_| panic!("failed to execute {}", cmd.bin))
 }
 
-pub fn exec(cmd: Arc<Mutex<Commands>>) -> ExitStatus {
+/// # Panics
+///
+/// Will panic if cmd.lock does not exists
+pub fn exec(cmd: &Arc<Mutex<Commands>>) -> ExitStatus {
     let mut last_error: ExitStatus = ExitStatus::from_raw(0);
     let cmd_lock: MutexGuard<Commands> = cmd.lock().unwrap();
 
@@ -41,7 +44,7 @@ pub fn exec(cmd: Arc<Mutex<Commands>>) -> ExitStatus {
             .varfiles
             .iter()
             .map(|f: &String| {
-                let cmd_clone: Arc<Mutex<Commands>> = Arc::clone(&cmd);
+                let cmd_clone: Arc<Mutex<Commands>> = Arc::clone(cmd);
                 let file_clone: String = f.clone();
                 thread::spawn(move || {
                     let cmd_lock: MutexGuard<Commands> = cmd_clone.lock().unwrap();

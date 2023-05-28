@@ -31,7 +31,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         cmd.varfiles = select_tfvars_files(cmd.varfiles).unwrap();
     }
     cmd.varfiles.sort();
-    let cmd_arc: Arc<Mutex<Commands>> = Arc::new(Mutex::new(cmd));
-    let exit_status: ExitStatus = exec(Arc::clone(&cmd_arc));
+    //    let cmd_arc: Arc<Mutex<Commands>> = Arc::new(Mutex::new(cmd));
+    //let exit_status: ExitStatus = exec(&Arc::clone(&cmd_arc));
+    let exit_status: ExitStatus = exec(&Arc::new(Mutex::new(cmd)));
     exit(exit_status.code().unwrap_or(1));
 }

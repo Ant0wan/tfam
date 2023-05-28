@@ -7,6 +7,9 @@ use std::path::PathBuf;
 use walkdir::DirEntry;
 use walkdir::WalkDir;
 
+/// # Panics
+///
+/// Will panic if error in getting relative path
 pub fn find_tfvars_files(current_dir: &std::path::Path) -> Result<Vec<String>, io::Error> {
     let mut results: Vec<String> = Vec::new();
     for entry in WalkDir::new(current_dir) {
