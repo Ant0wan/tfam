@@ -66,28 +66,20 @@ impl Commands {
                 }
                 _ => {}
             }
-            match arg.starts_with("-var-file=") {
-                true => {
-                    if let Some(suffix) = arg.strip_prefix("-var-file=") {
-                        cmd.varfiles.push(suffix.to_string());
-                    } else {
-                        println!("Error, no varfile specified. `-var-file=` cannot be empty.");
-                    }
+            if let true = arg.starts_with("-var-file=") {
+                if let Some(suffix) = arg.strip_prefix("-var-file=") {
+                    cmd.varfiles.push(suffix.to_string());
+                } else {
+                    println!("Error, no varfile specified. `-var-file=` cannot be empty.");
                 }
-                _ => {}
             }
-            match arg.starts_with("-workspace-format=") {
-                true => {
-                    if let Some(suffix) = arg.strip_prefix("-workspace-format=") {
-                        cmd.workspaceformat = suffix.to_string();
-                        allformats.push(suffix.to_string());
-                    } else {
-                        println!(
-                            "Error, no format specified. `-workspace-format=` cannot be empty."
-                        );
-                    }
+            if let true = arg.starts_with("-workspace-format=") {
+                if let Some(suffix) = arg.strip_prefix("-workspace-format=") {
+                    cmd.workspaceformat = suffix.to_string();
+                    allformats.push(suffix.to_string());
+                } else {
+                    println!("Error, no format specified. `-workspace-format=` cannot be empty.");
                 }
-                _ => {}
             }
         }
         if cmd.interactive || cmd.automation {
