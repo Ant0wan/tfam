@@ -30,15 +30,14 @@ pub fn exec(cmd: Arc<Mutex<Commands>>) -> ExitStatus {
     let mut last_error: ExitStatus = ExitStatus::from_raw(0);
     let cmd_lock: MutexGuard<Commands> = cmd.lock().unwrap();
 
-    match cmd_lock.varfiles.is_empty() {
-        true => {
-            println!("{} {}", cmd_lock.bin, cmd_lock.tfargs.join(" "));
-            Command::new(&cmd_lock.bin)
-                .args(&cmd_lock.tfargs)
-                .status()
-                .unwrap_or_else(|_| panic!("failed to execute {}", cmd_lock.bin))
-        }
-        false => match cmd_lock.concurrent {
+    if cmd_lock.varfiles.is_empty() {
+        println!("{} {}", cmd_lock.bin, cmd_lock.tfargs.join(" "));
+        Command::new(&cmd_lock.bin)
+            .args(&cmd_lock.tfargs)
+            .status()
+            .unwrap_or_else(|_| panic!("failed to execute {}", cmd_lock.bin))
+    } else {
+        match cmd_lock.concurrent {
             true => {
                 let handles: Vec<_> = cmd_lock
                     .varfiles
@@ -69,6 +68,6 @@ pub fn exec(cmd: Arc<Mutex<Commands>>) -> ExitStatus {
                 }
                 last_error
             }
-        },
+        }
     }
 }
