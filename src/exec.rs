@@ -23,7 +23,7 @@ fn process_file(cmd: &Commands, file: &String) -> ExitStatus {
         .arg("-var-file")
         .arg(file)
         .status()
-        .expect(&format!("failed to execute {}", cmd.bin))
+        .unwrap_or_else(|_| panic!("failed to execute {}", cmd.bin))
 }
 
 pub fn exec(cmd: Arc<Mutex<Commands>>) -> ExitStatus {

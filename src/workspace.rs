@@ -8,7 +8,7 @@ pub fn get_workspace(path: &String, format: &String) -> String {
 }
 
 fn convert_path_to_workspace(path: &String, format: &String) -> String {
-    let without_extension: &str = path.splitn(2, '.').next().unwrap_or(&path);
+    let without_extension: &str = path.split('.').next().unwrap_or(path);
     let parts: Vec<&str> = without_extension.split('/').collect();
     if format.is_empty() {
         match env::var("TF_WORKSPACE_FORMAT") {
