@@ -7,7 +7,7 @@ use crate::cli::Commands;
 use crate::workspace::get_workspace;
 
 fn process_file(cmd: &Commands, file: &String) -> ExitStatus {
-    let workspace = get_workspace(file, &cmd.workspaceformat);
+    let workspace: String = get_workspace(file, &cmd.workspaceformat);
     println!(
         "TF_WORKSPACE={} {} {} -var-file {:?}",
         workspace,
@@ -25,7 +25,7 @@ fn process_file(cmd: &Commands, file: &String) -> ExitStatus {
 }
 
 pub fn exec(cmd: &Commands) -> ExitStatus {
-    let mut last_error = ExitStatus::from_raw(0);
+    let mut last_error: ExitStatus = ExitStatus::from_raw(0);
 
     match cmd.varfiles.is_empty() {
         true => {
@@ -40,10 +40,10 @@ pub fn exec(cmd: &Commands) -> ExitStatus {
                 let handles: Vec<_> = cmd
                     .varfiles
                     .iter()
-                    .map(|f| thread::spawn(move || process_file(cmd, f)))
+                    .map(|f: &String| thread::spawn(move || process_file(cmd, f)))
                     .collect();
                 for handle in handles {
-                    let status_result = handle.join().unwrap();
+                    let status_result: ExitStatus = handle.join().unwrap();
                     if !status_result.success() {
                         last_error = status_result;
                     }
@@ -52,7 +52,7 @@ pub fn exec(cmd: &Commands) -> ExitStatus {
             }
             false => {
                 for file in &cmd.varfiles {
-                    let status_result = process_file(cmd, file);
+                    let status_result: ExitStatus = process_file(cmd, file);
                     if !status_result.success() {
                         last_error = status_result;
                     }

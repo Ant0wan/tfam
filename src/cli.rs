@@ -1,4 +1,5 @@
 use std::env;
+use std::slice::Iter;
 
 #[derive(Debug)]
 pub struct Commands {
@@ -35,12 +36,12 @@ pub fn print_usage() {
 
 impl Commands {
     pub fn parse_commands(mut args: Vec<String>) -> Self {
-        let mut cmd = Commands::new();
+        let mut cmd: Commands = Commands::new();
         let mut allformats: Vec<String> = Vec::new();
 
         cmd.bin = env::var("TFAM_EXE").unwrap_or_else(|_| "terraform".to_string());
 
-        let mut args_iter = args.iter();
+        let mut args_iter: Iter<String> = args.iter();
         while let Some(arg) = args_iter.next() {
             match arg.as_str() {
                 "-interactive" => match env::var("TF_IN_AUTOMATION") {
@@ -90,19 +91,19 @@ impl Commands {
             }
         }
         if cmd.interactive || cmd.automation {
-            args.retain(|x| x != "-interactive");
+            args.retain(|x: &String| x != "-interactive");
         }
         if cmd.concurrent {
-            args.retain(|x| x != "-concurrent");
+            args.retain(|x: &String| x != "-concurrent");
         }
         for value in &cmd.varfiles {
-            args.retain(|x| x != value);
+            args.retain(|x: &String| x != value);
         }
-        args.retain(|e| !e.starts_with("-var-file"));
+        args.retain(|e: &String| !e.starts_with("-var-file"));
         for fmt in &allformats {
-            args.retain(|x| x != fmt);
+            args.retain(|x: &String| x != fmt);
         }
-        args.retain(|e| !e.starts_with("-workspace-format"));
+        args.retain(|e: &String| !e.starts_with("-workspace-format"));
         cmd.tfargs = args;
         cmd
     }
