@@ -2,23 +2,21 @@ pub use std::env;
 
 pub fn get_workspace(path: &String, format: &String) -> String {
     match env::var("TF_WORKSPACE") {
-        Ok(workspace) => return workspace,
-        Err(_) => return convert_path_to_workspace(path, format),
+        Ok(workspace) => workspace,
+        Err(_) => convert_path_to_workspace(path, format),
     }
 }
 
 fn convert_path_to_workspace(path: &String, format: &String) -> String {
-    let parts: Vec<&str>;
-
     let without_extension: &str = path.splitn(2, '.').next().unwrap_or(&path);
-    parts = without_extension.split('/').collect();
+    let parts: Vec<&str> = without_extension.split('/').collect();
     if format.is_empty() {
         match env::var("TF_WORKSPACE_FORMAT") {
-            Ok(format) => return replace_placeholders(parts, &format),
-            Err(_) => return parts.join("_"),
+            Ok(format) => replace_placeholders(parts, &format),
+            Err(_) => parts.join("_"),
         }
     } else {
-        return replace_placeholders(parts, format);
+        replace_placeholders(parts, format)
     }
 }
 
