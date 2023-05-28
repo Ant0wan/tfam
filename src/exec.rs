@@ -1,6 +1,8 @@
 use std::os::unix::process::ExitStatusExt;
 use std::process::Command;
 use std::process::ExitStatus;
+use std::sync::MutexGuard;
+use std::sync::{Arc, Mutex};
 use std::thread;
 
 use crate::cli::Commands;
@@ -24,23 +26,31 @@ fn process_file(cmd: &Commands, file: &String) -> ExitStatus {
         .expect(&format!("failed to execute {}", cmd.bin))
 }
 
-pub fn exec(cmd: &Commands) -> ExitStatus {
+pub fn exec(cmd: Arc<Mutex<Commands>>) -> ExitStatus {
     let mut last_error: ExitStatus = ExitStatus::from_raw(0);
+    let cmd_lock: MutexGuard<Commands> = cmd.lock().unwrap();
 
-    match cmd.varfiles.is_empty() {
+    match cmd_lock.varfiles.is_empty() {
         true => {
-            println!("{} {}", cmd.bin, cmd.tfargs.join(" "));
-            Command::new(&cmd.bin)
-                .args(&cmd.tfargs)
+            println!("{} {}", cmd_lock.bin, cmd_lock.tfargs.join(" "));
+            Command::new(&cmd_lock.bin)
+                .args(&cmd_lock.tfargs)
                 .status()
-                .expect(&format!("failed to execute {}", cmd.bin))
+                .expect(&format!("failed to execute {}", cmd_lock.bin))
         }
-        false => match cmd.concurrent {
+        false => match cmd_lock.concurrent {
             true => {
-                let handles: Vec<_> = cmd
+                let handles: Vec<_> = cmd_lock
                     .varfiles
                     .iter()
-                    .map(|f: &String| thread::spawn(move || process_file(cmd, f)))
+                    .map(|f: &String| {
+                        let cmd_clone: Arc<Mutex<Commands>> = Arc::clone(&cmd);
+                        let file_clone: String = f.clone();
+                        thread::spawn(move || {
+                            let cmd_lock: MutexGuard<Commands> = cmd_clone.lock().unwrap();
+                            process_file(&cmd_lock, &file_clone)
+                        })
+                    })
                     .collect();
                 for handle in handles {
                     let status_result: ExitStatus = handle.join().unwrap();
@@ -51,8 +61,8 @@ pub fn exec(cmd: &Commands) -> ExitStatus {
                 last_error
             }
             false => {
-                for file in &cmd.varfiles {
-                    let status_result: ExitStatus = process_file(cmd, file);
+                for file in &cmd_lock.varfiles {
+                    let status_result: ExitStatus = process_file(&cmd_lock, file);
                     if !status_result.success() {
                         last_error = status_result;
                     }

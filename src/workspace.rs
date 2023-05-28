@@ -22,8 +22,8 @@ fn convert_path_to_workspace(path: &String, format: &String) -> String {
     }
 }
 
-fn replace_placeholders(vector: Vec<&str>, str_expr: &String) -> String {
-    let mut result: String = String::from(str_expr.clone());
+fn replace_placeholders(vector: Vec<&str>, str_expr: &str) -> String {
+    let mut result: String = String::from(str_expr);
 
     for i in 0..vector.len() {
         let placeholder: String = format!("${}", i + 1);

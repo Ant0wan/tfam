@@ -8,6 +8,8 @@ use std::env;
 use std::path::PathBuf;
 use std::process::exit;
 use std::process::ExitStatus;
+use std::sync::Arc;
+use std::sync::Mutex;
 use vars::find_tfvars_files;
 
 pub mod cli;
@@ -29,6 +31,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         cmd.varfiles = select_tfvars_files(cmd.varfiles).unwrap();
     }
     cmd.varfiles.sort();
-    let exit_status: ExitStatus = exec(&cmd);
+    let cmd_arc: Arc<Mutex<Commands>> = Arc::new(Mutex::new(cmd));
+    let exit_status: ExitStatus = exec(Arc::clone(&cmd_arc));
     exit(exit_status.code().unwrap_or(1));
 }
