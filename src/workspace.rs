@@ -1,6 +1,7 @@
 pub use std::env;
 
-pub fn get_workspace(path: &String, format: &String) -> String {
+#[must_use]
+pub fn get(path: &String, format: &String) -> String {
     match env::var("TF_WORKSPACE") {
         Ok(workspace) => workspace,
         Err(_) => convert_path_to_workspace(path, format),

@@ -5,10 +5,10 @@ use std::sync::Arc;
 use std::thread;
 
 use crate::cli::Commands;
-use crate::workspace::get_workspace;
+use crate::workspace::get;
 
 fn process_file(cmd: &Commands, file: &String) -> ExitStatus {
-    let workspace: String = get_workspace(file, &cmd.workspaceformat);
+    let workspace: String = get(file, &cmd.workspaceformat);
     println!(
         "TF_WORKSPACE={} {} {} -var-file {:?}",
         workspace,
@@ -28,6 +28,7 @@ fn process_file(cmd: &Commands, file: &String) -> ExitStatus {
 /// # Panics
 ///
 /// Will panic if cmd.lock does not exists
+#[must_use]
 pub fn exec(cmd: &Arc<Commands>) -> ExitStatus {
     let mut last_error: ExitStatus = ExitStatus::from_raw(0);
 
