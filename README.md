@@ -42,19 +42,36 @@ wget -q -O -  https://raw.githubusercontent.com/Ant0wan/tfam/master/install.sh |
 
 ## Usage
 
-`TFAM_EXE`: `TFAM_EXE=tfexe tfam init` or `TFAM_EXE=terraform tfam init` or `TFAM_EXE=path/to/your/binary tfam init`
+To use **tfam**, you can set the following environment variables or provide command-line options:
 
-`TF_WORKSPACE_FORMAT`: awk-like format for workspace from file path $1=$n-1, $2=$n-2 `-workspace-format='hello$2_$1_$3'
+**TFAM_EXE**: Set the Terraform executable path or binary to be used by **tfam**. For example:
 
-`export TF_WORKSPACE_FORMAT='$-3_$-1_$-2'`
+```shell
+TFAM_EXE=tfexe tfam init
+TFAM_EXE=terraform tfam init
+TFAM_EXE=path/to/your/binary tfam init
+```
 
-`tfam -interactive -workspace-format='$-3_$-1_$-2`
+**TF_WORKSPACE_FORMAT**: This environment variable defines an awk-like format for generating workspace names based on file paths. The placeholders **$1**, **$2**, etc., represent segments of the file path, with **$1** corresponding to the first segment and **$-1** corresponding to the last segment. For example:
 
-`-interactive`: selection menu
+```shell
+export TF_WORKSPACE_FORMAT='myworkspace-$2_$1_$3'
+export TF_WORKSPACE_FORMAT='$-3_$-1_$-2'
+```
 
-`-concurrent`:
+Command-line options:
 
-`-var-file`: multiple
+`-interactive`: Enables an interactive selection menu for certain operations.
+
+`-concurrent`: Allows running operations concurrently.
+
+`-var-file`: Specifies one or more variable files to be used. For example:
+
+```shell
+tfam plan -var-file /path/to/file1 -var-file /path/to/file2
+```
+
+Please note that the specific functionalities and behavior may vary depending on the version of **tfam** and the Terraform version being used.
 
 ## Configuration
 
