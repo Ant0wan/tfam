@@ -8,7 +8,6 @@ use crate::cli::Commands;
 use crate::workspace::get_workspace;
 
 fn process_file(cmd: &Commands, file: &String) -> ExitStatus {
-    println!("IN IT");
     let workspace: String = get_workspace(file, &cmd.workspaceformat);
     println!(
         "TF_WORKSPACE={} {} {} -var-file {:?}",
