@@ -7,6 +7,20 @@ use std::path::PathBuf;
 use walkdir::DirEntry;
 use walkdir::WalkDir;
 
+/// Find `TFVars` files in the current directory.
+///
+/// # Errors
+///
+/// Returns an error if there is an issue with finding the `TFVars` files, such as a failure to read the directory or file I/O errors.
+///
+/// # Arguments
+///
+/// * `current_dir` - A reference to the current directory path.
+///
+/// # Returns
+///
+/// A `Result` containing a vector of found `TFVars` files or an `io::Error`.
+///
 /// # Panics
 ///
 /// Will panic if error in getting relative path
