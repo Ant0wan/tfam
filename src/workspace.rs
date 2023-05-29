@@ -21,6 +21,7 @@ fn convert_path_to_workspace(path: &String, format: &String) -> String {
     }
 }
 
+#[allow(clippy::needless_pass_by_value)]
 fn replace_placeholders(vector: Vec<&str>, str_expr: &str) -> String {
     let mut result: String = String::from(str_expr);
 
