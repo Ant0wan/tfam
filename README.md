@@ -81,10 +81,6 @@ Please note that the specific functionalities and behavior may vary depending on
 complete -W "-interactive -concurrent -workspace-format" -d -f -C $(which terraform) tfam
 ```
 
-## Coming features
-
-When performing `workspace` command + -interactive, it will display a workspace menu list.
-
 ## License
 
 This repository is protected by the GPL3 (GNU General Public License v3.0). You can find the full text of the license in the LICENSE file. Please review and comply with the terms and conditions of the GPL3 license before using or contributing to this project.
