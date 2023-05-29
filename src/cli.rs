@@ -1,6 +1,7 @@
 use std::env;
 use std::slice::Iter;
 
+#[allow(clippy::struct_excessive_bools)]
 #[derive(Debug)]
 pub struct Commands {
     pub automation: bool,
