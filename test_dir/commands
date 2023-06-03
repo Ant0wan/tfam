@@ -1,24 +1,98 @@
-init
-validate
-plan
-apply
-destroy
-console
-fmt
-force-unlock
-get
-graph
-import
-login
-logout
-output
-providers
-refresh
-show
-state
-taint
-test
-untaint
-version
-workspace
-
+terraform apply -auto-approve
+terraform apply -compact-warnings
+terraform apply -destroy
+terraform apply -input=true|false
+terraform apply -lock
+terraform apply -lock-timeout=DURATION
+terraform apply -no-color
+terraform apply -parallelism=N
+terraform apply -refresh=true|false
+terraform apply -state=PATH
+terraform apply -target=RESOURCE
+terraform console
+terraform destroy -auto-approve
+terraform destroy -compact-warnings
+terraform destroy -input=true|false
+terraform destroy -lock
+terraform destroy -lock-timeout=DURATION
+terraform destroy -no-color
+terraform destroy -parallelism=N
+terraform destroy -refresh=true|false
+terraform destroy -state=PATH
+terraform destroy -target=RESOURCE
+terraform fmt -check=true|false
+terraform fmt -diff
+terraform fmt -list=true|false
+terraform fmt -write=true|false
+terraform force-unlock -force
+terraform force-unlock -state=PATH
+terraform get -update=true|false
+terraform get -upgrade=true|false
+terraform graph -draw-cycles
+terraform graph -type=TYPE
+terraform import -backup=PATH
+terraform import -config=PATH
+terraform import -input=true|false
+terraform import -lock
+terraform import -lock-timeout=DURATION
+terraform import -no-color
+terraform import -state=PATH
+terraform init -backend-config=FILE
+terraform init -from-module=MODULE
+terraform init -get
+terraform init -get-plugins
+terraform init -input=true|false
+terraform init -lock
+terraform init -lock-timeout=DURATION
+terraform init -no-color
+terraform init -upgrade
+terraform init -verify-plugins=true|false
+terraform login
+terraform logout
+terraform output -json
+terraform output -no-color
+terraform output -state=PATH
+terraform plan -compact-warnings
+terraform plan -destroy
+terraform plan -detailed-exitcode
+terraform plan -input=true|false
+terraform plan -lock
+terraform plan -lock-timeout=DURATION
+terraform plan -no-color
+terraform plan -out=PATH
+terraform plan -parallelism=N
+terraform plan -refresh=true|false
+terraform plan -state=PATH
+terraform providers -json
+terraform providers -no-color
+terraform refresh -compact-warnings
+terraform refresh -input=true|false
+terraform refresh -lock
+terraform refresh -lock-timeout=DURATION
+terraform refresh -no-color
+terraform refresh -state=PATH
+terraform show -json
+terraform show -no-color
+terraform show -state=PATH
+terraform state -no-color
+terraform taint -allow-missing
+terraform taint -backup=PATH
+terraform taint -lock
+terraform taint -lock-timeout=DURATION
+terraform taint -no-color
+terraform taint -state=PATH
+terraform test -json
+terraform test -no-color
+terraform test -timeout=TIMEOUT
+terraform untaint -allow-missing
+terraform untaint -backup=PATH
+terraform untaint -lock
+terraform untaint -lock-timeout=DURATION
+terraform untaint -no-color
+terraform untaint -state=PATH
+terraform validate -json
+terraform validate -no-color
+terraform version
+terraform workspace -hcl-config=PATH
+terraform workspace -state=PATH
+terraform workspace -terraform-config=PATH
