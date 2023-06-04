@@ -1,3 +1,4 @@
+use std::env;
 use std::os::unix::process::ExitStatusExt;
 use std::process::Command;
 use std::process::ExitStatus;
@@ -9,18 +10,21 @@ use crate::workspace::get;
 
 fn process_file(cmd: &Commands, file: &String) -> ExitStatus {
     let workspace: String = get(file, &cmd.workspaceformat);
+    let mut tf_cli_args: String = format!("-var-file {file}");
+    if let Ok(variable) = env::var("TF_CLI_ARGS") {
+        tf_cli_args = format!("{variable} -var-file {file}");
+    }
     println!(
-        "TF_WORKSPACE={} {} {} -var-file {:?}",
+        "TF_WORKSPACE={} TF_CLI_ARGS='{}' {} {} ",
         workspace,
+        tf_cli_args,
         cmd.bin,
-        cmd.tfargs.join(" "),
-        file
+        cmd.tfargs.join(" ")
     );
     Command::new(&cmd.bin)
         .args(&cmd.tfargs)
         .env("TF_WORKSPACE", workspace)
-        .arg("-var-file")
-        .arg(file)
+        .env("TF_CLI_ARGS", tf_cli_args)
         .status()
         .unwrap_or_else(|_| panic!("failed to execute {}", cmd.bin))
 }
