@@ -19,8 +19,7 @@ fn process_file(cmd: &Commands, file: &String) -> ExitStatus {
     Command::new(&cmd.bin)
         .args(&cmd.tfargs)
         .env("TF_WORKSPACE", workspace)
-        .arg("-var-file")
-        .arg(file)
+        .env("TF_VAR_FILE", file)
         .status()
         .unwrap_or_else(|_| panic!("failed to execute {}", cmd.bin))
 }
