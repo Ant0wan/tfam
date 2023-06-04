@@ -1,6 +1,5 @@
 extern crate walkdir;
 
-use std::env;
 use std::fs;
 use std::io;
 use std::path::Path;
@@ -27,10 +26,6 @@ use walkdir::WalkDir;
 /// Will panic if error in getting relative path
 pub fn find_tfvars_files(current_dir: &std::path::Path) -> Result<Vec<String>, io::Error> {
     let mut results: Vec<String> = Vec::new();
-    if let Ok(varfile) = env::var("TF_VAR_FILE") {
-        results.push(varfile);
-        env::remove_var("TF_VAR_FILE");
-    }
     for entry in WalkDir::new(current_dir) {
         let entry: DirEntry = entry?;
         if entry.file_type().is_file() {
