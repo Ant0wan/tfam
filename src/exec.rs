@@ -10,11 +10,11 @@ use crate::workspace::get;
 fn process_file(cmd: &Commands, file: &String) -> ExitStatus {
     let workspace: String = get(file, &cmd.workspaceformat);
     println!(
-        "TF_WORKSPACE={} {} {} -var-file {:?}",
+        "TF_WORKSPACE={} TF_VAR_FILE={} {} {} ",
         workspace,
+        file,
         cmd.bin,
-        cmd.tfargs.join(" "),
-        file
+        cmd.tfargs.join(" ")
     );
     Command::new(&cmd.bin)
         .args(&cmd.tfargs)
