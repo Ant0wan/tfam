@@ -32,7 +32,7 @@ impl Commands {
 }
 
 pub fn print_usage() {
-    println!("Usage: tfam [global options] <subcommand> [args]"); // To complete
+    eprintln!("Usage: tfam [global options] <subcommand> [args]"); // To complete
 }
 
 impl Commands {
@@ -72,7 +72,7 @@ impl Commands {
                 if let Some(suffix) = arg.strip_prefix("-var-file=") {
                     cmd.varfiles.push(suffix.to_string());
                 } else {
-                    println!("Error, no varfile specified. `-var-file=` cannot be empty.");
+                    eprintln!("Error, no varfile specified. `-var-file=` cannot be empty.");
                 }
             }
             if let true = arg.starts_with("-workspace-format=") {
@@ -80,7 +80,7 @@ impl Commands {
                     cmd.workspaceformat = suffix.to_string();
                     allformats.push(suffix.to_string());
                 } else {
-                    println!("Error, no format specified. `-workspace-format=` cannot be empty.");
+                    eprintln!("Error, no format specified. `-workspace-format=` cannot be empty.");
                 }
             }
         }

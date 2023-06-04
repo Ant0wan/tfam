@@ -14,7 +14,7 @@ fn process_file(cmd: &Commands, file: &String) -> ExitStatus {
     if let Ok(variable) = env::var("TF_CLI_ARGS") {
         tf_cli_args = format!("{variable} -var-file {file}");
     }
-    println!(
+    eprintln!(
         "TF_WORKSPACE={} TF_CLI_ARGS='{}' {} {} ",
         workspace,
         tf_cli_args,
@@ -37,7 +37,7 @@ pub fn exec(cmd: &Arc<Commands>) -> ExitStatus {
     let mut last_error: ExitStatus = ExitStatus::from_raw(0);
 
     if cmd.varfiles.is_empty() {
-        println!("{} {}", cmd.bin, cmd.tfargs.join(" "));
+        eprintln!("{} {}", cmd.bin, cmd.tfargs.join(" "));
         Command::new(&cmd.bin)
             .args(&cmd.tfargs)
             .status()
