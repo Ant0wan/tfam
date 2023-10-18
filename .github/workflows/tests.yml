@@ -2,6 +2,10 @@ name: Tests
 
 on: [push]
 
+defaults:
+  run:
+    shell: sh
+
 jobs:
   fmt:
     runs-on: ubuntu-latest
@@ -17,7 +21,7 @@ jobs:
         working-directory: ${{ matrix.directory }}
     steps:
       - uses: actions/checkout@v4
-      - uses: hashicorp/setup-terraform@v2
+      - run: ./install.sh
       - run: terraform fmt -recursive -check
   init:
     needs: [fmt]
@@ -34,7 +38,7 @@ jobs:
         working-directory: ${{ matrix.directory }}
     steps:
       - uses: actions/checkout@v4
-      - uses: hashicorp/setup-terraform@v2
+      - run: ./install.sh
       - run: terraform init -no-color
   validate:
     needs: [init]
@@ -51,7 +55,7 @@ jobs:
         working-directory: ${{ matrix.directory }}
     steps:
       - uses: actions/checkout@v4
-      - uses: hashicorp/setup-terraform@v2
+      - run: ./install.sh
       - run: terraform init -no-color
       - run: terraform validate -no-color
   plan:
@@ -69,7 +73,7 @@ jobs:
         working-directory: ${{ matrix.directory }}
     steps:
       - uses: actions/checkout@v4
-      - uses: hashicorp/setup-terraform@v2
+      - run: ./install.sh
       - run: terraform init -no-color
       - run: terraform plan -no-color
 
