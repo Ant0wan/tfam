@@ -96,14 +96,19 @@ jobs:
         include:
           - directory: ./test_dir/project1
             terraform_version: 0.15.0
+            args: ''
           - directory: ./test_dir/project2
             terraform_version: 1.3.3
+            args: -var-file=./dev/region_a/service_two.tfvars -var-file=./dev/region_b/service_two.tfvars -var-file=./production/region_a/service_two.tfvars
           - directory: ./test_dir/project3/applications/backend-app
             terraform_version: 1.2.1
+            args: ''
           - directory: ./test_dir/project3/applications/frontend-app
             terraform_version: 1.4.1
+            args: ''
           - directory: ./test_dir/project4
             terraform_version: 1.6.1
+            args: -var-file=vars/us-east1/app-one/dev.tfvars.json -var-file=vars/asia-east1/app-one/dev.tfvars.json
     defaults:
       run:
         working-directory: ${{ matrix.directory }}
@@ -115,4 +120,4 @@ jobs:
       - run: ./install.sh
         working-directory: ${{ github.workspace }}
       - run: tfam init -no-color
-      - run: tfam plan -no-color
+      - run: tfam plan -no-color ${{ matrix.args }}
