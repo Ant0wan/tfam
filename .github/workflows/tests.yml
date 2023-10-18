@@ -55,7 +55,7 @@ jobs:
       - run: terraform init -no-color
       - run: terraform validate -no-color
   plan:
-    needs: [init]
+    needs: [validate]
     runs-on: ubuntu-latest
     strategy:
       matrix:
