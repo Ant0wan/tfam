@@ -2,7 +2,6 @@ name: Tests
 
 on: [push]
 
-
 jobs:
   fmt:
     runs-on: ubuntu-latest
@@ -23,6 +22,16 @@ jobs:
   init:
     needs: [fmt]
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directory:
+          - ./test_dir/project1
+          - ./test_dir/project2
+          - ./test_dir/project3
+          - ./test_dir/project4
+    defaults:
+      run:
+        working-directory: ${{ matrix.directory }}
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v2
@@ -30,6 +39,16 @@ jobs:
   validate:
     needs: [init]
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directory:
+          - ./test_dir/project1
+          - ./test_dir/project2
+          - ./test_dir/project3
+          - ./test_dir/project4
+    defaults:
+      run:
+        working-directory: ${{ matrix.directory }}
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v2
@@ -38,9 +57,19 @@ jobs:
   plan:
     needs: [init]
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directory:
+          - ./test_dir/project1
+          - ./test_dir/project2
+          - ./test_dir/project3
+          - ./test_dir/project4
+    defaults:
+      run:
+        working-directory: ${{ matrix.directory }}
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v2
       - run: terraform init -no-color
-      - run: terraform validate -no-color
+      - run: terraform plan -no-color
 
