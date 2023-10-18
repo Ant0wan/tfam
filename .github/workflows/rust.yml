@@ -7,6 +7,7 @@ on:
     paths:
       - '**.rs'
       - '**.toml'
+      - '.github/workflows/rust.yml'
     tags:
       - '*'
   pull_request:

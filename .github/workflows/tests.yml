@@ -1,6 +1,17 @@
 name: Tests
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.rs'
+      - '**.toml'
+      - '.github/workflows/*'
+    tags:
+      - '*'
+  pull_request:
+    branches:
 
 defaults:
   run:
