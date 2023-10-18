@@ -13,11 +13,13 @@ jobs:
           - ./test_dir/project2
           - ./test_dir/project3
           - ./test_dir/project4
+    defaults:
+      run:
+        working-directory: ${{ matrix.directory }}
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v2
       - run: terraform fmt -recursive -check
-        working-directory: ${{ matrix.directory }}
   init:
     needs: [fmt]
     runs-on: ubuntu-latest
