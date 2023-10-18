@@ -117,7 +117,7 @@ jobs:
       - run: tfam init -no-color
       - run: tfam plan -no-color
   cli:
-    needs: [plan]
+    needs: [validate]
     runs-on: ubuntu-latest
     strategy:
       matrix:
