@@ -22,7 +22,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: ls
+        working-directory: ${{ github.workspace }}
       - run: ./install.sh
+        working-directory: ${{ github.workspace }}
       - run: terraform fmt -recursive -check
   init:
     needs: [fmt]
@@ -40,6 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: ./install.sh
+        working-directory: ${{ github.workspace }}
       - run: terraform init -no-color
   validate:
     needs: [init]
@@ -57,6 +60,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: ./install.sh
+        working-directory: ${{ github.workspace }}
       - run: terraform init -no-color
       - run: terraform validate -no-color
   plan:
@@ -75,6 +79,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: ./install.sh
+        working-directory: ${{ github.workspace }}
       - run: terraform init -no-color
       - run: terraform plan -no-color
 
