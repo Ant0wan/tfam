@@ -4,7 +4,7 @@ terraform {
 
 module "conditionally_used_dev_module" {
   source = "./dev"
-  count = var.environment == "dev" ? 1 : 0
+  count  = var.environment == "dev" ? 1 : 0
 }
 
 module "conditionally_used_staging_module" {
