@@ -21,6 +21,7 @@ jobs:
         working-directory: ${{ matrix.directory }}
     steps:
       - uses: actions/checkout@v4
+      - run: ls
       - run: ./install.sh
       - run: terraform fmt -recursive -check
   init:
