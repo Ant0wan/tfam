@@ -50,6 +50,7 @@ To use **tfam**, you can set the following environment variables or provide comm
 
 ```shell
 TFAM_EXE=tfexe tfam init
+TFAM_EXE=tofu tfam init
 TFAM_EXE=terraform tfam init
 TFAM_EXE=path/to/your/binary tfam init
 ```
