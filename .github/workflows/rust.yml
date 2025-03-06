@@ -127,4 +127,3 @@ jobs:
         name: tfam_${{ matrix.target }}
     - run: mv tfam tfam_${{ matrix.target }}
     - run: gh release upload ${GITHUB_REF#refs/*/} tfam_${{ matrix.target }}
-
